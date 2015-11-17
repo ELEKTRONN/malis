@@ -5,6 +5,7 @@
 #include <vector>
 #include <queue>
 #include <map>
+
 using namespace std;
 
 template <class T>
@@ -63,7 +64,7 @@ void malis_loss_weights_cpp(const int n_vert, const int* seg,
     pqueue.resize(edge_count);
     sort( pqueue.begin(), pqueue.end(), AffinityGraphCompare<float>( edge_weight ) );
 //    for ( int i = 0; i < j; i++ )
-//       cout<<"i="<<i<<" edge="<<pqueue[i]<<" weight="<<edge_weight[pqueue[i]]<<std::endl;
+//       cout<<"i="<<i<<" edge="<<pqueue[i]<<" weight="<<edge_weight[pqueue[i]]<<endl;
 
 
     /* Start MaxST */
@@ -73,32 +74,30 @@ void malis_loss_weights_cpp(const int n_vert, const int* seg,
     map<int,int>::iterator it1, it2;
 
     /* Start Kruskal's */
+    //cout<<"START Kruskal"<<endl;
     for (unsigned int i = 0; i < pqueue.size(); ++i ) {
         min_edge = pqueue[i];
-
-           
+         
         set1 = dsets.find_set(node1[min_edge]);
         set2 = dsets.find_set(node2[min_edge]);
-        // cout<<"i="<<i<<" edge="<<pqueue[i]<<" weight="<<edge_weight[pqueue[i]]<<" set1="<<set1<<" set2="<<set2<<" node1="<<node1[min_edge]<<" node2="<<node2[min_edge]<<std::endl;
+        //cout<<"i="<<i<<" node1="<<node1[min_edge]<<" node2="<<node2[min_edge]<<" edge="<<pqueue[i]<<" weight="<<edge_weight[pqueue[i]]<<" set1="<<set1<<" set2="<<set2<<endl;
 
         if (set1!=set2){
-            // cout<<"JOIN set "<<set1<<" and set "<<set2<<" with edge "<<min_edge<<" at weight "<<edge_weight[min_edge]<<std::endl;
+            //cout<<"  JOIN set "<<set1<<" and set "<<set2<<" with edge "<<min_edge<<" at weight "<<edge_weight[min_edge]<<endl;
             dsets.link(set1, set2);
 
             /* compute the number of pairs merged by this MST edge */
-            for (it1 = overlap[set1].begin();
-                    it1 != overlap[set1].end(); ++it1) { // loop over the overlap dict for node1 of min edge (set1)
-                for (it2 = overlap[set2].begin();
-                        it2 != overlap[set2].end(); ++it2) {// loop over the overlap dict for node2 of min edge (set2)
+            for (it1 = overlap[set1].begin(); it1 != overlap[set1].end(); ++it1) { // loop over the overlap dict for node1 of min edge (set1)
+                for (it2 = overlap[set2].begin(); it2 != overlap[set2].end(); ++it2) {// loop over the overlap dict for node2 of min edge (set2)
 
                     n_pairs = it1->second * it2->second;
-
+                    //cout<<"    Iterating over: "<<" (ID="<<it1->first<<") and(ID="<<it2->first<<")"<<endl;
                     if (pos && (it1->first == it2->first)) { // these nodes have same ID in GT / are connected
-                        // cout<<"For min_edge "<<min_edge<<" linking "<<set1<<" (ID="<<it1->first<<") and "<<set2<<"(ID="<<it2->first<<") - adding N="<<n_pairs<<std::endl;
-                        //cout<<"For min_edge "<<min_edge<<" between "<<node1[min_edge]<<" (ID="<<it1->first<<") and "<<node2[min_edge]<<"(ID="<<it2->first<<") - adding N="<<n_pairs<<std::endl;
+                        //cout<<"    For min_edge "<<min_edge<<" linking "<<set1<<" (ID="<<it1->first<<") and "<<set2<<"(ID="<<it2->first<<") - adding N="<<n_pairs<<endl;
+                        //cout<<"    For min_edge "<<min_edge<<" between "<<node1[min_edge]<<" (ID="<<it1->first<<") and "<<node2[min_edge]<<"(ID="<<it2->first<<") - adding N="<<n_pairs<<endl;
                         counts[min_edge] += n_pairs;
                     } else if ((!pos) && (it1->first != it2->first)) { // these nodes have different ID in GT / are disconnected
-                        // cout<<"For min_edge "<<min_edge<<" linking "<<set1<<" (ID="<<it1->first<<") and "<<set2<<"(ID="<<it2->first<<") - adding N="<<n_pairs<<std::endl;
+                        //cout<<"    For min_edge "<<min_edge<<" linking "<<set1<<" (ID="<<it1->first<<") and "<<set2<<"(ID="<<it2->first<<") - adding N="<<n_pairs<<endl;
                         counts[min_edge] += n_pairs;
                     }
                 }

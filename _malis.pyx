@@ -78,7 +78,11 @@ def connected_components(np.int n_vert,
                              <int*> &seg[0])
                              
     unique, new_seg, seg_sizes = np.unique(seg, return_inverse=True, return_counts=True)
+    if 0 not in unique: # if no BG present, new_seg will still have 0 component
+        new_seg[new_seg==0] = unique[-1]+1 # we need to rename that one!
+        
     new_seg = new_seg.astype(np.int32)
+    
     assert np.all( (seg==0)==(new_seg==0) ), "The background label was messed up"
     
     return new_seg, seg_sizes

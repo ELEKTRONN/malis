@@ -26,4 +26,5 @@ void marker_watershed_cpp(const int n_vert,
                           const float* edge_weight,
                           const int size_thresh,
                           int* seg);
+
 #endif

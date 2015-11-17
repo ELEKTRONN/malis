@@ -12,71 +12,6 @@ from scipy import sparse
 
 from _malis import malis_loss_weights, connected_components, marker_watershed
 
-#def rand_index_ISBI(segA, segB):
-#  """
-#  
-#  SNEMI3D challenge: 3D segmentation of neurites in EM images
-#  
-#  Script to calculate the segmentation error between some 3D 
-#  original labels and their corresponding proposed labels. 
-#  
-#  The evaluation metric is:
-#   - Rand error: 1 - F-score of adapted Rand index
-#  
-#  author: Ignacio Arganda-Carreras (iarganda@mit.edu)
-#  More information at http://brainiac.mit.edu/SNEMI3D
-#  This script released under the terms of the General Public 
-#  License in its latest edition.
-#  Input: 
-#        segA - ground truth (16-bit labels, 0 = background)
-#        segB - proposed labels (16-bit labels, 0 = background)
-#  Output:
-#        re - adapated Rand error (1.0 - F-score of adapted Rand index)
-#        
-#  Translated from provided MATLAB code to python by Marius Killinger  
-#  """   
-#  segA = segA.copy().ravel()
-#  segB = segB.copy().ravel()
-#  #segB -= segB.min()
-#  n = segA.size
-#  
-#  n_labels_A = np.max(segA)+1
-#  n_labels_B = np.max(segB)+1
-#  
-#  # compute overlap matrix
-#  #p_ij = np.zeros((segA(:),segB(:),1,n_labels_A,n_labels_B)
-#  p_ij = sparse.csc_matrix( (np.ones(len(segA), np.int32), (segA, segB)), shape=(n_labels_A,n_labels_B) ).todense()
-#  p_ij = np.array(p_ij).astype(np.float64)
-#  assert np.sum(p_ij) == len(segA)
-#  # a_i
-#  a_i = np.sum(p_ij[1:,:], axis=1)
-#  
-#  # b_j
-#  b_j = np.sum(p_ij[1:,1:], axis=0)
-#  
-#  p_i0 = p_ij[1:,0]	# pixels marked as BG in segB which are not BG in segA
-#  p_ij = p_ij[1:,1:]
-#  
-#  sumA = np.sum(a_i * a_i)
-#  sumB = np.sum(b_j * b_j) +  np.sum(p_i0)/n
-#  sumAB = np.sum(np.sum(p_ij**2)) + np.sum(p_i0)/n
-#  
-#  # Rand index
-#  #ri = full(1 - (sumA + sumB - 2*sumAB)/ n^2);
-#  
-#  # precision
-#  prec = float(sumAB) / sumB
-#  
-#  # recall
-#  rec = float(sumAB) / sumA
-#  
-#  # F-score
-#  fScore = 2.0 * prec * rec / (prec + rec)
-#  
-#  re = 1.0 - fScore
-#  return re
-
-
 def compute_V_rand_N2(seg_true, seg_pred):
     # TODO which RI is the right one???
     """
@@ -234,7 +169,7 @@ def bmap_to_affgraph(bmap, nhood, return_min_idx=False):
     nhood: 2d np.ndarray, int
         Neighbourhood pattern specifying the edges in the affinity graph
         Shape: (#edges, ndim)
-        edge_pattern[i] contains the displacement coordinates of edge i
+        nhood[i] contains the displacement coordinates of edge i
         The number and order of edges is arbitrary
         
     Returns
@@ -246,7 +181,9 @@ def bmap_to_affgraph(bmap, nhood, return_min_idx=False):
         
     """
     if np.max(abs(nhood))>1:
-      print("This is buggy for edges with radius > 1")
+        raise ValueError("Cannot construct affinity graph with edges longer\
+        than 1 pixel from boundary map. Please construct affinity graph from\
+        segmentation / IDs.")
       
     nhood = np.ascontiguousarray(nhood, np.int32)
     shape = bmap.shape
@@ -288,7 +225,7 @@ def seg_to_affgraph(seg, nhood):
     nhood: 2d np.ndarray, int
         Neighbourhood pattern specifying the edges in the affinity graph
         Shape: (#edges, ndim)
-        edge_pattern[i] contains the displacement coordinates of edge i
+        nhood[i] contains the displacement coordinates of edge i
         The number and order of edges is arbitrary
         
     Returns
@@ -338,7 +275,7 @@ def nodelist_like(shape, nhood):
     nhood: 2d np.ndarray, int
         Neighbourhood pattern specifying the edges in the affinity graph
         Shape: (#edges, ndim)
-        edge_pattern[i] contains the displacement coordinates of edge i
+        nhood[i] contains the displacement coordinates of edge i
         The number and order of edges is arbitrary
         
     Returns
@@ -380,7 +317,7 @@ def nodelist_like(shape, nhood):
 #    nhood: 2d np.ndarray, int
 #        Neighbourhood pattern specifying the edges in the affinity graph
 #        Shape: (#edges, ndim)
-#        edge_pattern[i] contains the displacement coordinates of edge i
+#        nhood[i] contains the displacement coordinates of edge i
 #        The number and order of edges is arbitrary
 #        
 #    Returns
@@ -411,7 +348,12 @@ class GetMalisWeights(object):
         
     def __call__(self, affinity_pred, affinity_gt, nhood, size_thresh=1):
         """
-        1. create edge lists / lookup
+        Computes MALIS loss weights
+        
+        Roughly speaking the malis weights quantify the impact of an edge in
+        the predicted affinity graph on the resulting segmentation.
+        
+        1. create edge lists / or lookup cached
         2. create GT IDs from affinity_gt (run CC)
         3. do pos/neg malis computation        
         """
