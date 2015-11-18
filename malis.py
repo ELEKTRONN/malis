@@ -4,16 +4,21 @@ Created on Fri Nov 13 17:23:09 2015
 
 @author: Marius Felix Killinger
 """
-
 import numpy as np
 import scipy.sparse
-from scipy.misc import comb
-from scipy import sparse
 
 from _malis import malis_loss_weights, connected_components, marker_watershed
 
+
+__all__ = ['compute_V_rand_N2',
+           'bmap_to_affgraph',
+           'seg_to_affgraph',
+           'affgraph_to_seg',
+           'get_malis_weights',
+           'connected_components_from_affgraph',
+           'watershed_from_affgraph']
+
 def compute_V_rand_N2(seg_true, seg_pred):
-    # TODO which RI is the right one???
     """
     Computes Rand index of ``seg_pred`` w.r.t ``seg_true``.
     The input arrays both contain label IDs and
@@ -49,54 +54,6 @@ def compute_V_rand_N2(seg_true, seg_pred):
     V_rand = 2*(P**2).sum() / ((t**2).sum()+(s**2).sum())
 
     return (V_rand, V_rand_split, V_rand_merge)
-
-#def rand_index(seg_true, seg_pred):
-#    # TODO which RI is the right one???
-#    """
-#    Computes Rand index of ``seg_pred`` w.r.t ``seg_true``.
-#    The input arrays both contain label IDs and
-#    may be of arbitrary, but equal, shape.
-#    
-#    Pixels which are have ID in the true segmentation are not counted!
-#    
-#    Parameters:
-#    
-#    seg_true: np.ndarray
-#      True segmentation, IDs
-#    seg_pred: np.ndarray
-#      Predicted segmentation
-#    
-#    Returns
-#    -------
-#    
-#    ri: float
-#      Rand Index
-#    fscore: float
-#      F score
-#    prec: float
-#      Precision
-#    rec: float
-#      Recall
-#    """
-#    seg_true = seg_true.ravel()
-#    seg_pred = seg_pred.ravel()
-#    idx = (seg_true != 0)
-#    seg_true = seg_true[idx]
-#    seg_pred = seg_pred[idx]
-#
-#    tp_plus_fp = comb(np.bincount(seg_true), 2).sum()
-#    tp_plus_fn = comb(np.bincount(seg_pred), 2).sum()
-#    A = np.c_[(seg_true, seg_pred)]
-#    tp = sum(comb(np.bincount(A[A[:, 0] == i, 1]), 2).sum()
-#             for i in set(seg_true))
-#    fp = tp_plus_fp - tp
-#    fn = tp_plus_fn - tp
-#    tn = comb(len(A), 2) - tp - fp - fn
-#    ri = (tp + tn) / (tp + fp + fn + tn)
-#    prec = tp/(tp+fp)
-#    rec = tp/(tp+fn)
-#    fscore = 2*prec*rec/(prec+rec)
-#    return ri, fscore, prec, rec
 
 #def mknhood2d(radius=1):
 #    """
@@ -152,11 +109,55 @@ def compute_V_rand_N2(seg_true, seg_pred):
 #
 #    return np.ascontiguousarray(nhood)
 
+
+def nodelist_from_shape(shape, nhood):
+    """
+    Constructs the two node lists to represent edges of
+    an affinity graph for a given volume shape and neighbourhood pattern.
+    
+    Parameters
+    ----------
+    
+    shape: tuple/list
+     shape of corresponding volume (z, y, x)
+    nhood: 2d np.ndarray, int
+        Neighbourhood pattern specifying the edges in the affinity graph
+        Shape: (#edges, ndim)
+        nhood[i] contains the displacement coordinates of edge i
+        The number and order of edges is arbitrary
+        
+    Returns
+    -------
+    
+    node1: 4d np.ndarray, int32
+        Start nodes, reshaped as array
+    
+    node2: 4d np.ndarray, int32
+        End nodes, reshaped as array
+    """
+    n_edge = nhood.shape[0]
+    nodes = np.arange(np.prod(shape),dtype=np.int32).reshape(shape)
+    node1 = np.tile(nodes, (n_edge,1,1,1))
+    node2 = np.full(node1.shape, -1, dtype=np.int32)
+
+    for e in range(n_edge):
+        node2[e, \
+            max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
+            max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
+            max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] = \
+                nodes[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
+                     max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
+                     max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])]
+
+    return node1, node2
+    
+    
+    
 def bmap_to_affgraph(bmap, nhood, return_min_idx=False):
     """
     Construct an affinity graph from a boundary map
     
-    The spatial shape of the affinity graph is the same as of seg.
+    The spatial shape of the affinity graph is the same as of seg_gt.
     This means that some edges are are undefined and therefore treated as disconnected.
     If the offsets in nhood are positive, the edges with largest spatial index are undefined.    
     
@@ -202,25 +203,26 @@ def bmap_to_affgraph(bmap, nhood, return_min_idx=False):
                             max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
                             max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])] )
 
-                            
-    aff = 1 - aff # we have actually accumulated edges which are disconnected by a boundary
+    # we have actually accumulated edges which are disconnected by a boundary
+    # --> invert                        
+    aff = 1 - aff
 
     
     return aff
 
-def seg_to_affgraph(seg, nhood):
+def seg_to_affgraph(seg_gt, nhood):
     """
     Construct an affinity graph from a segmentation (IDs) 
     
     Segments with ID 0 are regarded as disconnected
-    The spatial shape of the affinity graph is the same as of seg.
+    The spatial shape of the affinity graph is the same as of seg_gt.
     This means that some edges are are undefined and therefore treated as disconnected.
     If the offsets in nhood are positive, the edges with largest spatial index are undefined.
     
     Parameters
     ----------
     
-    seg: 3d np.ndarray, int
+    seg_gt: 3d np.ndarray, int (any precision)
         Volume of segmentation IDs
     nhood: 2d np.ndarray, int
         Neighbourhood pattern specifying the edges in the affinity graph
@@ -231,40 +233,167 @@ def seg_to_affgraph(seg, nhood):
     Returns
     -------
     
-    aff: 4d np.ndarray int32
+    aff: 4d np.ndarray int16
         Affinity graph of shape (#edges, x, y, z)
         1: connected, 0: disconnected        
     """  
     nhood = np.ascontiguousarray(nhood, np.int32)
-    shape = seg.shape
+    shape = seg_gt.shape
     n_edge = nhood.shape[0]
-    aff = np.zeros((n_edge,)+shape,dtype=np.int32)
+    aff = np.zeros((n_edge,)+shape,dtype=np.int16)
 
     for e in range(n_edge):
         aff[e, \
             max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
             max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
             max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] = \
-                        (seg[max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
+                        (seg_gt[max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
                             max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
                             max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] == \
-                         seg[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
+                         seg_gt[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
                             max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
                             max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])] ) \
-                        * ( seg[max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
+                        * ( seg_gt[max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
                             max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
                             max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] > 0 ) \
-                        * ( seg[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
+                        * ( seg_gt[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
                             max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
                             max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])] > 0 )
 
     return aff
 
-
-
-def nodelist_like(shape, nhood):
+class AffgraphToSeg(object):
     """
-    Constructs the two node lists to represent edges of
+    Parameters
+    ----------
+    
+    affinity_gt: 4d np.ndarray int16
+        Affinity graph of shape (#edges, x, y, z)
+        1: connected, 0: disconnected 
+    nhood: 2d np.ndarray, int
+        Neighbourhood pattern specifying the edges in the affinity graph
+        Shape: (#edges, ndim)
+        nhood[i] contains the displacement coordinates of edge i
+        The number and order of edges is arbitrary
+   size_thresh: int
+        Theshold for size filter after connected components
+        
+    Returns
+    -------
+    
+    seg_gt: 3d np.ndarray, int (any precision)
+        Volume of segmentation IDs
+    
+    """
+    
+    def __init__(self):
+        self.edgelist_cache = dict()
+        
+    def __call__(self, affinity_gt, nhood, size_thresh=1):
+        sh     = affinity_gt.shape
+        vol_sh = sh[1:]
+        key = (vol_sh, nhood.tobytes()) # cannot hash np.ndarray directly
+        if self.edgelist_cache.has_key(key):
+            node1, node2 = self.edgelist_cache[key]
+        else:
+            node1, node2 = nodelist_from_shape(vol_sh, nhood)
+            node1, node2 = node1.ravel(), node2.ravel()
+            self.edgelist_cache[key] = (node1, node2)
+        
+        affinity_gt   = np.ascontiguousarray(affinity_gt, dtype=np.float32).ravel()
+        size_thresh   = int(size_thresh)
+                
+        # CC on GT
+        seg_gt, seg_sizes = connected_components(int(np.prod(vol_sh)),
+                                              node1,
+                                              node2,
+                                              affinity_gt,
+                                              size_thresh)
+        seg_gt = seg_gt.reshape(vol_sh)
+        
+        return seg_gt
+        
+affgraph_to_seg = AffgraphToSeg()     
+
+
+class GetMalisWeights(object):
+    """
+    Computes MALIS loss weights
+    
+    Roughly speaking the malis weights quantify the impact of an edge in
+    the predicted affinity graph on the resulting segmentation.
+
+    Parameters
+    ----------
+    affinity_pred: 4d np.ndarray float32
+        Affinity graph of shape (#edges, x, y, z)
+        1: connected, 0: disconnected        
+    affinity_gt: 4d np.ndarray int16
+        Affinity graph of shape (#edges, x, y, z)
+        1: connected, 0: disconnected 
+    seg_gt: 3d np.ndarray, int (any precision)
+        Volume of segmentation IDs        
+    nhood: 2d np.ndarray, int
+        Neighbourhood pattern specifying the edges in the affinity graph
+        Shape: (#edges, ndim)
+        nhood[i] contains the displacement coordinates of edge i
+        The number and order of edges is arbitrary
+        
+    Returns
+    -------
+    
+    pos_counts: 4d np.ndarray int32
+      Impact counts for edges that should be 1 (connect)      
+    neg_counts: 4d np.ndarray int32
+      Impact counts for edges that should be 0 (disconnect)           
+    """
+    def __init__(self):
+        self.edgelist_cache = dict()
+        
+    def __call__(self, affinity_pred, affinity_gt, seg_gt, nhood):
+
+        sh     = affinity_pred.shape
+        vol_sh = sh[1:]
+        key = (vol_sh, nhood.tobytes()) # cannot hash np.ndarray directly
+        if self.edgelist_cache.has_key(key):
+            node1, node2 = self.edgelist_cache[key]
+        else:
+            node1, node2 = nodelist_from_shape(vol_sh, nhood)
+            node1, node2 = node1.ravel(), node2.ravel()
+            self.edgelist_cache[key] = (node1, node2)
+        
+        
+        affinity_gt   = affinity_gt.ravel()        
+        affinity_pred = np.ascontiguousarray(affinity_pred, dtype=np.float32).ravel()
+        seg_gt        = np.ascontiguousarray(seg_gt, dtype=np.int32).ravel()    
+                 
+        # MALIS
+        edge_weights_pos = np.minimum(affinity_pred, affinity_gt) 
+        pos_counts = malis_loss_weights(seg_gt,
+                                        node1,
+                                        node2,
+                                        edge_weights_pos,
+                                        1)
+                                        
+        edge_weights_neg = np.maximum(affinity_pred, affinity_gt)
+        neg_counts = malis_loss_weights(seg_gt,
+                                        node1,
+                                        node2,
+                                        edge_weights_neg,
+                                        0)
+        
+        pos_counts = pos_counts.reshape(sh)
+        neg_counts = neg_counts.reshape(sh)
+        
+        return pos_counts, neg_counts  
+
+get_malis_weights = GetMalisWeights()
+
+
+
+def affgraph_to_edgelist(aff, nhood):
+    """
+    Constructs the two node lists and a list of edge weights to represent edges of
     an affinity graph for a given volume shape and neighbourhood pattern.
     
     Parameters
@@ -281,130 +410,94 @@ def nodelist_like(shape, nhood):
     Returns
     -------
     
-    node1: 4d np.ndarray, int32
-        Start nodes, reshaped as array
+    node1: 1d np.ndarray, int
+        Start nodes
     
-    node2: 4d np.ndarray, int32
-        End nodes, reshaped as array
-    """
-    n_edge = nhood.shape[0]
-    nodes = np.arange(np.prod(shape),dtype=np.int32).reshape(shape)
-    node1 = np.tile(nodes, (n_edge,1,1,1))
-    node2 = np.full(node1.shape, -1, dtype=np.int32)
-
-    for e in range(n_edge):
-        node2[e, \
-            max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
-            max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
-            max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] = \
-                nodes[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
-                     max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
-                     max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])]
-
-    return node1, node2
+    node2: 1d np.ndarray, int
+        End nodes
+        
+    aff: 1d np.ndarray
+        Edge weight between node1 and node2
+    """    
+    node1, node2 = nodelist_from_shape(aff.shape[1:], nhood)
+    return node1.ravel(), node2.ravel(), aff.ravel()
 
 
-#def affgraph_to_edgelist(aff, nhood):
-#    """
-#    Constructs the two node lists and a list of edge weights to represent edges of
-#    an affinity graph for a given volume shape and neighbourhood pattern.
-#    
-#    Parameters
-#    ----------
-#    
-#    shape: tuple/list
-#     shape of corresponding volume (z, y, x)
-#    nhood: 2d np.ndarray, int
-#        Neighbourhood pattern specifying the edges in the affinity graph
-#        Shape: (#edges, ndim)
-#        nhood[i] contains the displacement coordinates of edge i
-#        The number and order of edges is arbitrary
+def connected_components_from_affgraph(aff, nhood):
+    node1, node2, edge = affgraph_to_edgelist(aff, nhood)
+    n_vert = int(np.prod(aff.shape[1:]))
+    seg_gt, seg_sizes = connected_components(n_vert, node1, node2, edge)
+    seg_gt = seg_gt.reshape(aff.shape[1:])
+    return seg_gt, seg_sizes
+
+
+def watershed_from_affgraph(aff, seeds, nhood):
+    node1, node2, edge = affgraph_to_edgelist(aff, nhood)
+    marker = np.ascontiguousarray(seeds, dtype=np.int32).ravel() 
+    seg_gt, seg_sizes = marker_watershed(marker, node1, node2, edge)
+    seg_gt = seg_gt.reshape(aff.shape[1:])
+    return seg_gt, seg_sizes
+    
+    
+#class GetMalisWeightsSeg(object):
+#    def __init__(self):
+#        self.edgelist_cache = dict()
 #        
-#    Returns
-#    -------
-#    
-#    node1: 1d np.ndarray, int
-#        Start nodes
-#    
-#    node2: 1d np.ndarray, int
-#        End nodes
+#    def __call__(self, affinity_pred, affinity_gt, nhood, size_thresh=1):
+#        """
+#        Computes MALIS loss weights
 #        
-#    aff: 1d np.ndarray
-#        Edge weight between node1 and node2
-#    """    
-#    node1, node2 = nodelist_like(aff.shape[1:], nhood)
-#    return node1.ravel(), node2.ravel(), aff.ravel()
+#        Roughly speaking the malis weights quantify the impact of an edge in
+#        the predicted affinity graph on the resulting segmentation.
+#        
+#        1. create edge lists / or lookup cached
+#        2. create GT IDs from affinity_gt (run CC)
+#        3. do pos/neg malis computation        
+#        """
+#        sh     = affinity_pred.shape
+#        vol_sh = sh[1:]
+#        key = (vol_sh, nhood.tobytes()) # cannot hash np.ndarray directly
+#        if self.edgelist_cache.has_key(key):
+#            node1, node2 = self.edgelist_cache[key]
+#        else:
+#            node1, node2 = nodelist_from_shape(vol_sh, nhood)
+#            node1, node2 = node1.ravel(), node2.ravel()
+#            self.edgelist_cache[key] = (node1, node2)
+#                
+#        affinity_pred = np.ascontiguousarray(affinity_pred, dtype=np.float32).ravel()
+#        affinity_gt   = np.ascontiguousarray(affinity_gt, dtype=np.float32).ravel()
+#        size_thresh   = int(size_thresh)
+#               
+#        # CC on GT
+#        seg_gt, seg_sizes = connected_components(int(np.prod(vol_sh)),
+#                                              node1,
+#                                              node2,
+#                                              affinity_gt,
+#                                              size_thresh)
+#         
+#        # MALIS
+#        edge_weights_pos = np.minimum(affinity_pred, affinity_gt) 
+#        pos_counts = malis_loss_weights(seg_gt,
+#                                        node1,
+#                                        node2,
+#                                        edge_weights_pos,
+#                                        1)
+#                                        
+#        edge_weights_neg = np.maximum(affinity_pred, affinity_gt)
+#        neg_counts = malis_loss_weights(seg_gt,
+#                                        node1,
+#                                        node2,
+#                                        edge_weights_neg,
+#                                        0)
+#        
+#        pos_counts = pos_counts.reshape(sh)
+#        neg_counts = neg_counts.reshape(sh)
+#        seg_gt        = seg_gt.reshape(vol_sh)
+#        
+#        return pos_counts, neg_counts, seg_gt    
 #
-#def connected_components_from_affgraph(aff, nhood):
-#    node1, node2, edge = affgraph_to_edgelist(aff, nhood)
-#    seg, seg_sizes = connected_components(int(np.prod(aff.shape[1:])),node1,node2,edge)
-#    seg = seg.reshape(aff.shape[1:])
-#    return seg, seg_sizes
-    
-    
-class GetMalisWeights(object):
-    def __init__(self):
-        self.edgelist_cache = dict()
-        
-    def __call__(self, affinity_pred, affinity_gt, nhood, size_thresh=1):
-        """
-        Computes MALIS loss weights
-        
-        Roughly speaking the malis weights quantify the impact of an edge in
-        the predicted affinity graph on the resulting segmentation.
-        
-        1. create edge lists / or lookup cached
-        2. create GT IDs from affinity_gt (run CC)
-        3. do pos/neg malis computation        
-        """
-        sh     = affinity_pred.shape
-        vol_sh = sh[1:]
-        key = (vol_sh, nhood.tobytes()) # cannot hash np.ndarray directly
-        if self.edgelist_cache.has_key(key):
-            node1, node2 = self.edgelist_cache[key]
-        else:
-            node1, node2 = nodelist_like(vol_sh, nhood)
-            node1, node2 = node1.ravel(), node2.ravel()
-            self.edgelist_cache[key] = (node1, node2)
-        
-        
-        affinity_pred = np.ascontiguousarray(affinity_pred.ravel(), dtype=np.float32)
-        affinity_gt   = np.ascontiguousarray(affinity_gt.ravel(), dtype=np.float32)
-        nhood         = np.ascontiguousarray(nhood, np.int32)
-        size_thresh   = int(size_thresh)
-        
-        
-        # CC on GT
-        seg, seg_sizes = connected_components(int(np.prod(vol_sh)), node1, node2, affinity_gt, size_thresh)
-         
-        # MALIS
-        edge_weights_pos = np.minimum(affinity_pred, affinity_gt) 
-        pos_counts = malis_loss_weights(seg, node1, node2, edge_weights_pos, 1)
-        edge_weights_neg = np.maximum(affinity_pred, affinity_gt)
-        neg_counts = malis_loss_weights(seg, node1, node2, edge_weights_neg, 0)
-        
-        pos_counts = pos_counts.reshape(sh)
-        neg_counts = neg_counts.reshape(sh)
-        seg        = seg.reshape(vol_sh)
-        
-        return pos_counts, neg_counts, seg
-        
-get_malis_weights = GetMalisWeights()     
-     
-     
-if __name__=="__main__":
-    pass
-#    n = mknhood3d(2)
-#    a = np.zeros((6,6,6), dtype=np.int)
-#    c = 2
-#    for x,y,z in n:
-#        a[c+x, c+y, c+z] = 1
-#        
-#    seg1 = np.array([1,1,1,2,2,2,3,3,0,0])
-#    seg2 = np.array([6,6,6,5,5,5,7,1,8,8])
-#    
-#    print rand_index(seg1, seg2)
-#    print compute_V_rand_N2(seg1, seg2)
-#    print 1-rand_index_ISBI(seg1, seg2)
+#get_malis_weights_seg = GetMalisWeightsSeg()  
 
-    
+      
+if __name__=="__main__":
+    pass   
