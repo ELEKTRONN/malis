@@ -22,13 +22,6 @@ def read(fname):
  return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 
-
-pysmall = Extension('pysmall',
-    sources = ['pysmall.pyx', 'small.cpp'],
-    include_dirs = ['include/'])
-
-
-
 ext_modules = [Extension("malis._malis",
                sources=["malis/_malis.pyx", "malis/_malis_lib.cpp"],
                include_dirs = ['malis/'],

@@ -58,60 +58,60 @@ class MalisWeights(theano.Op):
     __props__ = ()
 
     def make_node(self, *inputs):
-      if len(inputs)!=4:
-          raise ValueError("MalisOp takes 4 inputs: \
+        if len(inputs)!=4:
+            raise ValueError("MalisOp takes 4 inputs: \
           affinity_pred, affinity_gt, seg_gt, nhood")
-      inputs = map(T.as_tensor_variable, inputs) 
-      affinity_pred, affinity_gt, seg_gt, nhood = inputs
-      
-      if affinity_pred.ndim!=4:
-          raise ValueError("affinity_pred must be convertable to a\
-          TensorVariable of dimensionality 4. This one has ndim=%i"\
-          %affinity_pred.ndim)
- 
-      if affinity_gt.ndim!=4:
-          raise ValueError("affinity_gt must be convertable to a\
-          TensorVariable of dimensionality 4. This one has ndim=%i"\
-          %affinity_gt.ndim)
-          
-      if seg_gt.ndim!=3:
-          raise ValueError("seg_gt must be convertable to a\
-          TensorVariable of dimensionality 3. This one has ndim=%i"\
-          %seg_gt.ndim) 
-          
-      if nhood.ndim!=2:
-          raise ValueError("nhood must be convertable to a\
-          TensorVariable of dimensionality 2. This one has ndim=%i"\
-          %nhood.ndim)          
-     
-      malis_weights_pos = T.TensorType(
-                        dtype='int32',
-                        broadcastable=(False,)*4)()
-                        
-      malis_weights_neg = T.TensorType(
-                        dtype='int32',
-                        broadcastable=(False,)*4)()                       
-               
-      outputs = [malis_weights_pos, malis_weights_neg]               
+        inputs = map(T.as_tensor_variable, inputs)
+        affinity_pred, affinity_gt, seg_gt, nhood = inputs
 
-      return gof.Apply(self, inputs, outputs)
+        if affinity_pred.ndim!=4:
+            raise ValueError("affinity_pred must be convertible to a\
+          TensorVariable of dimensionality 4. This one has ndim=%i" \
+                             %affinity_pred.ndim)
+
+        if affinity_gt.ndim!=4:
+            raise ValueError("affinity_gt must be convertible to a\
+          TensorVariable of dimensionality 4. This one has ndim=%i" \
+                             %affinity_gt.ndim)
+
+        if seg_gt.ndim!=3:
+            raise ValueError("seg_gt must be convertible to a\
+          TensorVariable of dimensionality 3. This one has ndim=%i" \
+                             %seg_gt.ndim)
+
+        if nhood.ndim!=2:
+            raise ValueError("nhood must be convertible to a\
+          TensorVariable of dimensionality 2. This one has ndim=%i" \
+                             %nhood.ndim)
+
+        malis_weights_pos = T.TensorType(
+            dtype='int32',
+            broadcastable=(False,)*4)()
+
+        malis_weights_neg = T.TensorType(
+            dtype='int32',
+            broadcastable=(False,)*4)()
+
+        outputs = [malis_weights_pos, malis_weights_neg]
+
+        return gof.Apply(self, inputs, outputs)
 
     def perform(self, node, inputs, output_storage):
-      affinity_pred, affinity_gt, seg_gt, nhood = inputs
-      pos, neg = output_storage   
-      pos[0], neg[0] = malis_utils.malis_weights(affinity_pred,
-                                                 affinity_gt,
-                                                 seg_gt,
-                                                 nhood)
+        affinity_pred, affinity_gt, seg_gt, nhood = inputs
+        pos, neg = output_storage
+        pos[0], neg[0] = malis_utils.malis_weights(affinity_pred,
+                                                   affinity_gt,
+                                                   seg_gt,
+                                                   nhood)
 
     def grad(self, inputs, outputs_gradients):
-      # The gradient of all outputs is 0 w.r.t to all inputs
-      return [disconnected_type(),]*4    
+        # The gradient of all outputs is 0 w.r.t to all inputs
+        return [disconnected_type(),]*4
 
     def connection_pattern(self, node):
-      # The gradient of all outputs is 0 w.r.t to all inputs
-      return [[False, False],]*4
-           
+        # The gradient of all outputs is 0 w.r.t to all inputs
+        return [[False, False],]*4
+
 malis_weights = MalisWeights()
 
 
@@ -130,28 +130,28 @@ if __name__=="__main__":
     neigh_t    = T.TensorType('int32',   [False,]*2, name='neighb')()
     
     
-    pos_t, neg_t = malis_weights(aff_pred_t, aff_gt_t, seg_gt_t, neigh_t)    
+    pos_t, neg_t = malis_weights(aff_pred_t, aff_gt_t, seg_gt_t, neigh_t)
     loss_t = T.sum(pos_t * aff_pred_t)
     
-    f = theano.function([aff_pred_t, aff_gt_t, seg_gt_t, neigh_t], [pos_t, neg_t, loss_t]) 
+    f = theano.function([aff_pred_t, aff_gt_t, seg_gt_t, neigh_t], [pos_t, neg_t, loss_t])
     grad_t = theano.grad(loss_t, aff_pred_t)
-    f2 = theano.function([aff_pred_t, aff_gt_t, seg_gt_t, neigh_t], [grad_t,]) 
+    f2 = theano.function([aff_pred_t, aff_gt_t, seg_gt_t, neigh_t], [grad_t,])
     
     nhood = np.array([[ 0.,  1.,  0.],
-                      [ 0.,  0.,  1.]], dtype=np.int32) 
-                        
+                      [ 0.,  0.,  1.]], dtype=np.int32)
+
     test_id2 = np.array([[[1, 1, 2, 2, 0, 3],
                           [1, 1, 2, 2, 0, 3],
                           [1, 1, 2, 2, 0, 3],
                           [1, 1, 2, 2, 0, 3]]], dtype=np.int32)
-                      
+
     aff_gt   = malis_utils.seg_to_affgraph(test_id2, nhood)
-    seg_gt   = malis_utils.affgraph_to_seg(aff_gt, nhood)[0].astype(np.int16)          
+    seg_gt   = malis_utils.affgraph_to_seg(aff_gt, nhood)[0].astype(np.int16)
     aff_pred = np.array([ [[[ 1.,  1.,  1.,  1.,  0., 1.],
                             [ 1.,  1.,  1.,  1.,   0., 1.],
                             [ 0.9, 0.8, 1.,  1.,  0., 1.],
                             [ 0.,  0.,  0.,  0.,  0., 1.]]],
-                          
+
                           [[[ 1.,  0.,  1.,  0.3, 0.4,0.],
                             [ 0.7, 0.,  1.,  0.,  0., 0.],
                             [ 1.,  0.2, 1.,  0.,  0., 0.],
@@ -166,48 +166,48 @@ if __name__=="__main__":
     print '-'*40
 
     g = f2(aff_pred, aff_gt, seg_gt, nhood)
-    print g[0] 
+    print g[0]
 
     
     g_true = np.array([[[[  3.,   2.,   4.,   0.,   0.,   3.],
-         [  8.,   0.,  16.,   0.,   0.,   2.],
-         [ 12.,   0.,   1.,   0.,   0.,   1.],
-         [  0.,   0.,   0.,   0.,   0.,   0.]]],
+                         [  8.,   0.,  16.,   0.,   0.,   2.],
+                         [ 12.,   0.,   1.,   0.,   0.,   1.],
+                         [  0.,   0.,   0.,   0.,   0.,   0.]]],
 
 
-       [[[  1.,   0.,   1.,   0.,   0.,   0.],
-         [  0.,   0.,   1.,   0.,   0.,   0.],
-         [  1.,   0.,   2.,   0.,   0.,   0.],
-         [  1.,   0.,   3.,   0.,   0.,   0.]]]])
-         
+                       [[[  1.,   0.,   1.,   0.,   0.,   0.],
+                         [  0.,   0.,   1.,   0.,   0.,   0.],
+                         [  1.,   0.,   2.,   0.,   0.,   0.],
+                         [  1.,   0.,   3.,   0.,   0.,   0.]]]])
+
     pos_true = np.array([[[[ 3,  2,  4,  0,  0,  3],
-         [ 8,  0, 16,  0,  0,  2],
-         [12,  0,  1,  0,  0,  1],
-         [ 0,  0,  0,  0,  0,  0]]],
+                           [ 8,  0, 16,  0,  0,  2],
+                           [12,  0,  1,  0,  0,  1],
+                           [ 0,  0,  0,  0,  0,  0]]],
 
 
-       [[[ 1,  0,  1,  0,  0,  0],
-         [ 0,  0,  1,  0,  0,  0],
-         [ 1,  0,  2,  0,  0,  0],
-         [ 1,  0,  3,  0,  0,  0]]]], dtype=np.int32)
-         
+                         [[[ 1,  0,  1,  0,  0,  0],
+                           [ 0,  0,  1,  0,  0,  0],
+                           [ 1,  0,  2,  0,  0,  0],
+                           [ 1,  0,  3,  0,  0,  0]]]], dtype=np.int32)
+
     assert np.allclose(g[0],g_true)
     assert np.allclose(pos,pos_true)
     
     nhood = np.array([[ 0.,  1.,  0.],
-                      [ 0.,  0.,  1.]]) 
-                        
+                      [ 0.,  0.,  1.]])
+
     test_id2 = np.array([[[1, 1, 2, 2, 0, 3],
                           [1, 1, 2, 2, 0, 3],
                           [1, 1, 2, 2, 0, 3],
                           [1, 1, 2, 2, 0, 3]]], dtype=np.int32)
-                      
-    aff_gt   = malis_utils.seg_to_affgraph(test_id2, nhood)                  
+
+    aff_gt   = malis_utils.seg_to_affgraph(test_id2, nhood)
     aff_pred = np.array([ [[[ 1.,  1.,  1.,  1.,  0., 1.],
                             [ 1.,  1.,  1.,  1.,   0., 1.],
                             [ 0.9, 0.8, 1.,  1.,  0., 1.],
                             [ 0.,  0.,  0.,  0.,  0., 1.]]],
-                          
+
                           [[[ 1.,  0.,  1.,  0.3, 0.4,0.],
                             [ 0.7, 0.,  1.,  0.,  0., 0.],
                             [ 1.,  0.2, 1.,  0.,  0., 0.],

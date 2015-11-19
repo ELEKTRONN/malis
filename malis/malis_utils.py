@@ -144,17 +144,17 @@ def nodelist_from_shape(shape, nhood):
 
     for e in range(n_edge):
         node2[e, \
-            max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
-            max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
-            max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] = \
-                nodes[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
-                     max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
-                     max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])]
+        max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
+        max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
+        max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] = \
+            nodes[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
+            max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
+            max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])]
 
     return node1, node2
-    
-    
-    
+
+
+
 def bmap_to_affgraph(bmap, nhood, return_min_idx=False):
     """
     Construct an affinity graph from a boundary map
@@ -187,7 +187,7 @@ def bmap_to_affgraph(bmap, nhood, return_min_idx=False):
         raise ValueError("Cannot construct affinity graph with edges longer\
         than 1 pixel from boundary map. Please construct affinity graph from\
         segmentation / IDs.")
-      
+
     nhood = np.ascontiguousarray(nhood, np.int32)
     shape = bmap.shape
     n_edge = nhood.shape[0]
@@ -195,15 +195,15 @@ def bmap_to_affgraph(bmap, nhood, return_min_idx=False):
 
     for e in range(n_edge):
         aff[e, \
-            max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
+        max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
+        max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
+        max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] = np.maximum( \
+            bmap[max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
             max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
-            max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] = np.maximum( \
-                        bmap[max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
-                            max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
-                            max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])], \
-                        bmap[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
-                            max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
-                            max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])] )
+            max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])], \
+            bmap[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
+            max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
+            max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])] )
 
     # we have actually accumulated edges which are disconnected by a boundary
     # --> invert                        
@@ -238,7 +238,7 @@ def seg_to_affgraph(seg_gt, nhood):
     aff: 4d np.ndarray int16
         Affinity graph of shape (#edges, x, y, z)
         1: connected, 0: disconnected        
-    """  
+    """
     nhood = np.ascontiguousarray(nhood, np.int32)
     shape = seg_gt.shape
     n_edge = nhood.shape[0]
@@ -246,21 +246,21 @@ def seg_to_affgraph(seg_gt, nhood):
 
     for e in range(n_edge):
         aff[e, \
-            max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
-            max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
-            max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] = \
-                        (seg_gt[max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
-                            max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
-                            max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] == \
-                         seg_gt[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
-                            max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
-                            max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])] ) \
-                        * ( seg_gt[max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
-                            max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
-                            max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] > 0 ) \
-                        * ( seg_gt[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
-                            max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
-                            max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])] > 0 )
+        max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
+        max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
+        max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] = \
+            (seg_gt[max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
+             max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
+             max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] == \
+             seg_gt[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
+             max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
+             max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])] ) \
+            * ( seg_gt[max(0,-nhood[e,0]):min(shape[0],shape[0]-nhood[e,0]), \
+                max(0,-nhood[e,1]):min(shape[1],shape[1]-nhood[e,1]), \
+                max(0,-nhood[e,2]):min(shape[2],shape[2]-nhood[e,2])] > 0 ) \
+            * ( seg_gt[max(0,nhood[e,0]):min(shape[0],shape[0]+nhood[e,0]), \
+                max(0,nhood[e,1]):min(shape[1],shape[1]+nhood[e,1]), \
+                max(0,nhood[e,2]):min(shape[2],shape[2]+nhood[e,2])] > 0 )
 
     return aff
 
@@ -290,7 +290,7 @@ class AffgraphToSeg(object):
     
     def __init__(self):
         self.edgelist_cache = dict()
-        
+
     def __call__(self, affinity_gt, nhood, size_thresh=1):
         sh     = affinity_gt.shape
         vol_sh = sh[1:]
@@ -304,18 +304,18 @@ class AffgraphToSeg(object):
         
         affinity_gt   = np.ascontiguousarray(affinity_gt, dtype=np.float32).ravel()
         size_thresh   = int(size_thresh)
-                
+
         # CC on GT
         seg_gt, seg_sizes = connected_components(int(np.prod(vol_sh)),
-                                              node1,
-                                              node2,
-                                              affinity_gt,
-                                              size_thresh)
+                                                 node1,
+                                                 node2,
+                                                 affinity_gt,
+                                                 size_thresh)
         seg_gt = seg_gt.reshape(vol_sh)
         
         return seg_gt, seg_sizes
-        
-affgraph_to_seg = AffgraphToSeg()     
+
+affgraph_to_seg = AffgraphToSeg()
 
 
 
@@ -352,7 +352,7 @@ class MalisWeights(object):
     """
     def __init__(self):
         self.edgelist_cache = dict()
-        
+
     def __call__(self, affinity_pred, affinity_gt, seg_gt, nhood,
                  unrestrict_neg=False):
         """
@@ -402,33 +402,33 @@ class MalisWeights(object):
             self.edgelist_cache[key] = (node1, node2)
         
         
-        affinity_gt   = affinity_gt.ravel()        
+        affinity_gt   = affinity_gt.ravel()
         affinity_pred = np.ascontiguousarray(affinity_pred, dtype=np.float32).ravel()
-        seg_gt        = np.ascontiguousarray(seg_gt, dtype=np.int32).ravel()    
-                 
+        seg_gt        = np.ascontiguousarray(seg_gt, dtype=np.int32).ravel()
+
         # MALIS
-        edge_weights_pos = np.minimum(affinity_pred, affinity_gt) 
+        edge_weights_pos = np.minimum(affinity_pred, affinity_gt)
         pos_counts = malis_loss_weights(seg_gt,
                                         node1,
                                         node2,
                                         edge_weights_pos,
                                         1)
-        if unrestrict_neg:                               
+        if unrestrict_neg:
             edge_weights_neg = affinity_pred
         else:
             edge_weights_neg = np.maximum(affinity_pred, affinity_gt)
-            
-            
+
+
         neg_counts = malis_loss_weights(seg_gt,
                                         node1,
                                         node2,
                                         edge_weights_neg,
-                                        0)                           
+                                        0)
         
         pos_counts = pos_counts.reshape(sh)
         neg_counts = neg_counts.reshape(sh)
         
-        return pos_counts, neg_counts  
+        return pos_counts, neg_counts
 
 malis_weights = MalisWeights()
 
@@ -461,7 +461,7 @@ def affgraph_to_edgelist(aff, nhood):
         
     aff: 1d np.ndarray
         Edge weight between node1 and node2
-    """    
+    """
     node1, node2 = nodelist_from_shape(aff.shape[1:], nhood)
     return node1.ravel(), node2.ravel(), aff.ravel()
 
@@ -469,18 +469,18 @@ def affgraph_to_edgelist(aff, nhood):
 
 def watershed_from_affgraph(aff, seeds, nhood):
     node1, node2, edge = affgraph_to_edgelist(aff, nhood)
-    marker = np.ascontiguousarray(seeds, dtype=np.int32).ravel() 
+    marker = np.ascontiguousarray(seeds, dtype=np.int32).ravel()
     seg_gt, seg_sizes = marker_watershed(marker, node1, node2, edge)
     seg_gt = seg_gt.reshape(aff.shape[1:])
     return seg_gt, seg_sizes
-    
 
-    
+
+
 if __name__=="__main__":
     import matplotlib.pyplot as plt
     from mpl_toolkits.mplot3d import Axes3D
     fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d') 
+    ax = fig.add_subplot(111, projection='3d')
     
     x,y,z = -mknhood3d(1.7).T
     
