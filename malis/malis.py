@@ -11,6 +11,9 @@ from _malis import malis_loss_weights, connected_components, marker_watershed
 
 
 __all__ = ['compute_V_rand_N2',
+           'mknhood2d',
+           'mknhood3d',
+           'mknhood3d_aniso',
            'bmap_to_affgraph',
            'seg_to_affgraph',
            'affgraph_to_seg',
@@ -55,59 +58,60 @@ def compute_V_rand_N2(seg_true, seg_pred):
 
     return (V_rand, V_rand_split, V_rand_merge)
 
-#def mknhood2d(radius=1):
-#    """
-#    Makes nhood structures for some most used dense graphs
-#    """
-#
-#    ceilrad = np.ceil(radius)
-#    x = np.arange(-ceilrad,ceilrad+1,1)
-#    y = np.arange(-ceilrad,ceilrad+1,1)
-#    [i,j] = np.meshgrid(y,x)
-#
-#    idxkeep = (i**2+j**2)<=radius**2
-#    i=i[idxkeep].ravel(); j=j[idxkeep].ravel();
-#    zeroIdx = np.ceil(len(i)/2).astype(np.int32);
-#
-#    nhood = np.vstack((i[:zeroIdx],j[:zeroIdx])).T.astype(np.int32)
-#    return np.ascontiguousarray(np.flipud(nhood))
-#
-#def mknhood3d(radius=1):
-#    """
-#    Makes nhood structures for some most used dense graphs.
-#    The neighborhood reference for the dense graph representation we use
-#    nhood(1,:) is a 3 vector that describe the node that conn(:,:,:,1) connects to
-#    so to use it: conn(23,12,42,3) is the edge between node [23 12 42] and [23 12 42]+nhood(3,:)
-#    See? It's simple! nhood is just the offset vector that the edge corresponds to.
-#    """
-#
-#    ceilrad = np.ceil(radius)
-#    x = np.arange(-ceilrad,ceilrad+1,1)
-#    y = np.arange(-ceilrad,ceilrad+1,1)
-#    z = np.arange(-ceilrad,ceilrad+1,1)
-#    [i,j,k] = np.meshgrid(z,y,z)
-#
-#    idxkeep = (i**2+j**2+k**2)<=radius**2
-#    i=i[idxkeep].ravel(); j=j[idxkeep].ravel(); k=k[idxkeep].ravel();
-#    zeroIdx = np.ceil(len(i)/2).astype(np.int32);
-#
-#    nhood = np.vstack((k[:zeroIdx],i[:zeroIdx],j[:zeroIdx])).T.astype(np.int32)
-#    return np.ascontiguousarray(np.flipud(nhood))
-#
-#def mknhood3d_aniso(radiusxy=1,radiusxy_zminus1=1.8):
-#    """
-#    Makes nhood structures for some most used dense graphs.
-#    """
-#
-#    nhoodxyz = mknhood3d(radiusxy)
-#    nhoodxy_zminus1 = mknhood2d(radiusxy_zminus1)
-#    
-#    nhood = np.zeros((nhoodxyz.shape[0]+2*nhoodxy_zminus1.shape[0],3),dtype=np.int32)
-#    nhood[:3,:3] = nhoodxyz
-#    nhood[3:,0] = -1
-#    nhood[3:,1:] = np.vstack((nhoodxy_zminus1,-nhoodxy_zminus1))
-#
-#    return np.ascontiguousarray(nhood)
+def mknhood2d(radius=1):
+    """
+    Makes nhood structures for some most used dense graphs
+    """
+    ceilrad = np.ceil(radius)
+    x = np.arange(-ceilrad,ceilrad+1,1)
+    y = np.arange(-ceilrad,ceilrad+1,1)
+    [i,j] = np.meshgrid(y,x)
+
+    idxkeep = (i**2+j**2)<=radius**2
+    i=i[idxkeep].ravel(); j=j[idxkeep].ravel()
+    zeroIdx = np.ceil(len(i)/2).astype(np.int32)
+
+    nhood = np.vstack((i[:zeroIdx],j[:zeroIdx])).T.astype(np.int32)
+    return np.ascontiguousarray(np.flipud(nhood))
+
+def mknhood3d(radius=1):
+    """
+    Makes nhood structures for some most used dense graphs.
+    The neighborhood reference for the dense graph representation we use
+    nhood(1,:) is a 3 vector that describe the node that conn(:,:,:,1) connects to
+    so to use it: conn(23,12,42,3) is the edge between node [23 12 42] and [23 12 42]+nhood(3,:)
+    See? It's simple! nhood is just the offset vector that the edge corresponds to.
+    """
+
+    ceilrad = np.ceil(radius)
+    x = np.arange(-ceilrad,ceilrad+1,1)
+    y = np.arange(-ceilrad,ceilrad+1,1)
+    z = np.arange(-ceilrad,ceilrad+1,1)
+    [i,j,k] = np.meshgrid(x,y,z)
+
+    idxkeep = (i**2+j**2+k**2)<=radius**2
+    i=i[idxkeep].ravel()
+    j=j[idxkeep].ravel()
+    k=k[idxkeep].ravel()
+    zeroIdx = np.ceil(len(i)/2).astype(np.int32)
+
+    nhood = np.vstack((k[:zeroIdx],i[:zeroIdx],j[:zeroIdx])).T.astype(np.int32)
+    return np.ascontiguousarray(np.flipud(nhood))
+
+def mknhood3d_aniso(radiusxy=1,radiusxy_zminus1=1.8):
+    """
+    Makes nhood structures for some most used dense graphs.
+    """
+
+    nhoodxyz = mknhood3d(radiusxy)
+    nhoodxy_zminus1 = mknhood2d(radiusxy_zminus1)
+    
+    nhood = np.zeros((nhoodxyz.shape[0]+2*nhoodxy_zminus1.shape[0],3),dtype=np.int32)
+    nhood[:3,:3] = nhoodxyz
+    nhood[3:,0] = -1
+    nhood[3:,1:] = np.vstack((nhoodxy_zminus1,-nhoodxy_zminus1))
+
+    return np.ascontiguousarray(nhood)
 
 
 def nodelist_from_shape(shape, nhood):
@@ -479,61 +483,20 @@ def watershed_from_affgraph(aff, seeds, nhood):
     return seg_gt, seg_sizes
     
     
-#class GetMalisWeightsSeg(object):
-#    def __init__(self):
-#        self.edgelist_cache = dict()
-#        
-#    def __call__(self, affinity_pred, affinity_gt, nhood, size_thresh=1):
-#        """
-#        Computes MALIS loss weights
-#        
-#        Roughly speaking the malis weights quantify the impact of an edge in
-#        the predicted affinity graph on the resulting segmentation.
-#        
-#        1. create edge lists / or lookup cached
-#        2. create GT IDs from affinity_gt (run CC)
-#        3. do pos/neg malis computation        
-#        """
-#        sh     = affinity_pred.shape
-#        vol_sh = sh[1:]
-#        key = (vol_sh, nhood.tobytes()) # cannot hash np.ndarray directly
-#        if self.edgelist_cache.has_key(key):
-#            node1, node2 = self.edgelist_cache[key]
-#        else:
-#            node1, node2 = nodelist_from_shape(vol_sh, nhood)
-#            node1, node2 = node1.ravel(), node2.ravel()
-#            self.edgelist_cache[key] = (node1, node2)
-#                
-#        affinity_pred = np.ascontiguousarray(affinity_pred, dtype=np.float32).ravel()
-#        affinity_gt   = np.ascontiguousarray(affinity_gt, dtype=np.float32).ravel()
-#        size_thresh   = int(size_thresh)
-#               
-#        # CC on GT
-#        seg_gt, seg_sizes = connected_components(int(np.prod(vol_sh)),
-#                                              node1,
-#                                              node2,
-#                                              affinity_gt,
-#                                              size_thresh)
-#         
-#        # MALIS
-#        edge_weights_pos = np.minimum(affinity_pred, affinity_gt) 
-#        pos_counts = malis_loss_weights(seg_gt,
-#                                        node1,
-#                                        node2,
-#                                        edge_weights_pos,
-#                                        1)
-#                                        
-#        edge_weights_neg = np.maximum(affinity_pred, affinity_gt)
-#        neg_counts = malis_loss_weights(seg_gt,
-#                                        node1,
-#                                        node2,
-#                                        edge_weights_neg,
-#                                        0)
-#        
-#        pos_counts = pos_counts.reshape(sh)
-#        neg_counts = neg_counts.reshape(sh)
-#        seg_gt        = seg_gt.reshape(vol_sh)
-#        
-#        return pos_counts, neg_counts, seg_gt    
-#
-#get_malis_weights_seg = GetMalisWeightsSeg()  
+if __name__=="__main__":
+    import matplotlib.pyplot as plt
+    from mpl_toolkits.mplot3d import Axes3D
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d') 
+    
+    x,y,z = -mknhood3d(1.7).T
+    
+    
+    ax.scatter(0,0,0, s=40, c='k')
+    ax.scatter(x, y, z)
+    ax.set_aspect('equal')
+    ax.set_xlim(-2,2)
+    ax.set_ylim(-2,2)
+    ax.set_zlim(-2,2)
+    for i,j,k in zip(x,y,z):
+        ax.plot((0,i), (0,j), (0,k))

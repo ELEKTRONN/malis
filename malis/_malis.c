@@ -231,8 +231,8 @@ void __Pyx_call_destructor(T* x) {
 #define _USE_MATH_DEFINES
 #endif
 #include <math.h>
-#define __PYX_HAVE___malis
-#define __PYX_HAVE_API___malis
+#define __PYX_HAVE__malis___malis
+#define __PYX_HAVE_API__malis___malis
 #include "string.h"
 #include "stdio.h"
 #include "stdlib.h"
@@ -442,7 +442,7 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "_malis.pyx",
+  "malis/_malis.pyx",
   "__init__.pxd",
   "type.pxd",
 };
@@ -1081,19 +1081,19 @@ static PyTypeObject *__pyx_ptype_5numpy_ndarray = 0;
 static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, char *, char *, int *); /*proto*/
 
-/* Module declarations from '_malis' */
+/* Module declarations from 'malis._malis' */
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_int32_t = { "int32_t", NULL, sizeof(__pyx_t_5numpy_int32_t), { 0 }, 0, IS_UNSIGNED(__pyx_t_5numpy_int32_t) ? 'U' : 'I', IS_UNSIGNED(__pyx_t_5numpy_int32_t), 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float32_t = { "float32_t", NULL, sizeof(__pyx_t_5numpy_float32_t), { 0 }, 0, 'R', 0, 0 };
-#define __Pyx_MODULE_NAME "_malis"
-int __pyx_module_is_main__malis = 0;
+#define __Pyx_MODULE_NAME "malis._malis"
+int __pyx_module_is_main_malis___malis = 0;
 
-/* Implementation of '_malis' */
+/* Implementation of 'malis._malis' */
 static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_RuntimeError;
-static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_seg_true, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, PyObject *__pyx_v_pos); /* proto */
-static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n_vert, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, int __pyx_v_size_thresh); /* proto */
-static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_marker, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, int __pyx_v_size_thresh); /* proto */
+static PyObject *__pyx_pf_5malis_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_seg_true, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, PyObject *__pyx_v_pos); /* proto */
+static PyObject *__pyx_pf_5malis_6_malis_2connected_components(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n_vert, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, int __pyx_v_size_thresh); /* proto */
+static PyObject *__pyx_pf_5malis_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_marker, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, int __pyx_v_size_thresh); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static char __pyx_k_B[] = "B";
@@ -1121,7 +1121,6 @@ static char __pyx_k_main[] = "__main__";
 static char __pyx_k_test[] = "__test__";
 static char __pyx_k_dtype[] = "dtype";
 static char __pyx_k_int32[] = "int32";
-static char __pyx_k_malis[] = "_malis";
 static char __pyx_k_node1[] = "node1";
 static char __pyx_k_node2[] = "node2";
 static char __pyx_k_numpy[] = "numpy";
@@ -1141,15 +1140,16 @@ static char __pyx_k_ValueError[] = "ValueError";
 static char __pyx_k_edge_weight[] = "edge_weight";
 static char __pyx_k_size_thresh[] = "size_thresh";
 static char __pyx_k_RuntimeError[] = "RuntimeError";
+static char __pyx_k_malis__malis[] = "malis._malis";
 static char __pyx_k_return_counts[] = "return_counts";
 static char __pyx_k_return_inverse[] = "return_inverse";
 static char __pyx_k_marker_watershed[] = "marker_watershed";
 static char __pyx_k_ascontiguousarray[] = "ascontiguousarray";
 static char __pyx_k_malis_loss_weights[] = "malis_loss_weights";
 static char __pyx_k_connected_components[] = "connected_components";
-static char __pyx_k_docs_devel_malis__malis_pyx[] = "/docs/devel/malis/_malis.pyx";
 static char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
 static char __pyx_k_The_background_label_was_messed[] = "The background label was messed up";
+static char __pyx_k_docs_devel_malis_malis__malis_p[] = "/docs/devel/malis/malis/_malis.pyx";
 static char __pyx_k_unknown_dtype_code_in_numpy_pxd[] = "unknown dtype code in numpy.pxd (%d)";
 static char __pyx_k_Format_string_allocated_too_shor[] = "Format string allocated too short, see comment in numpy.pxd";
 static char __pyx_k_Non_native_byte_order_not_suppor[] = "Non-native byte order not supported";
@@ -1166,13 +1166,13 @@ static PyObject *__pyx_n_s_ascontiguousarray;
 static PyObject *__pyx_n_s_astype;
 static PyObject *__pyx_n_s_connected_components;
 static PyObject *__pyx_n_s_counts;
-static PyObject *__pyx_kp_s_docs_devel_malis__malis_pyx;
+static PyObject *__pyx_kp_s_docs_devel_malis_malis__malis_p;
 static PyObject *__pyx_n_s_dtype;
 static PyObject *__pyx_n_s_edge_weight;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_int32;
 static PyObject *__pyx_n_s_main;
-static PyObject *__pyx_n_s_malis;
+static PyObject *__pyx_n_s_malis__malis;
 static PyObject *__pyx_n_s_malis_loss_weights;
 static PyObject *__pyx_n_s_marker;
 static PyObject *__pyx_n_s_marker_watershed;
@@ -1212,7 +1212,7 @@ static PyObject *__pyx_codeobj__8;
 static PyObject *__pyx_codeobj__10;
 static PyObject *__pyx_codeobj__12;
 
-/* "_malis.pyx":33
+/* "malis/_malis.pyx":33
  * 
  * 
  * def malis_loss_weights(np.ndarray[np.int32_t,  ndim=1] seg_true,             # <<<<<<<<<<<<<<
@@ -1221,9 +1221,9 @@ static PyObject *__pyx_codeobj__12;
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6_malis_1malis_loss_weights(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6_malis_1malis_loss_weights = {"malis_loss_weights", (PyCFunction)__pyx_pw_6_malis_1malis_loss_weights, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6_malis_1malis_loss_weights(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_5malis_6_malis_1malis_loss_weights(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_5malis_6_malis_1malis_loss_weights = {"malis_loss_weights", (PyCFunction)__pyx_pw_5malis_6_malis_1malis_loss_weights, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5malis_6_malis_1malis_loss_weights(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_seg_true = 0;
   PyArrayObject *__pyx_v_node1 = 0;
   PyArrayObject *__pyx_v_node2 = 0;
@@ -1298,7 +1298,7 @@ static PyObject *__pyx_pw_6_malis_1malis_loss_weights(PyObject *__pyx_self, PyOb
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("malis_loss_weights", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("_malis.malis_loss_weights", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("malis._malis.malis_loss_weights", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
@@ -1307,7 +1307,7 @@ static PyObject *__pyx_pw_6_malis_1malis_loss_weights(PyObject *__pyx_self, PyOb
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_node2), __pyx_ptype_5numpy_ndarray, 1, "node2", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 35; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_edge_weight), __pyx_ptype_5numpy_ndarray, 1, "edge_weight", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 36; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_pos), (&PyInt_Type), 1, "pos", 1))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 37; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = __pyx_pf_6_malis_malis_loss_weights(__pyx_self, __pyx_v_seg_true, __pyx_v_node1, __pyx_v_node2, __pyx_v_edge_weight, __pyx_v_pos);
+  __pyx_r = __pyx_pf_5malis_6_malis_malis_loss_weights(__pyx_self, __pyx_v_seg_true, __pyx_v_node1, __pyx_v_node2, __pyx_v_edge_weight, __pyx_v_pos);
 
   /* function exit code */
   goto __pyx_L0;
@@ -1318,7 +1318,7 @@ static PyObject *__pyx_pw_6_malis_1malis_loss_weights(PyObject *__pyx_self, PyOb
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_seg_true, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, PyObject *__pyx_v_pos) {
+static PyObject *__pyx_pf_5malis_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_seg_true, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, PyObject *__pyx_v_pos) {
   int __pyx_v_n_vert;
   int __pyx_v_n_edge;
   PyArrayObject *__pyx_v_counts = 0;
@@ -1403,7 +1403,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
   }
   __pyx_pybuffernd_edge_weight.diminfo[0].strides = __pyx_pybuffernd_edge_weight.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_edge_weight.diminfo[0].shape = __pyx_pybuffernd_edge_weight.rcbuffer->pybuffer.shape[0];
 
-  /* "_malis.pyx":39
+  /* "malis/_malis.pyx":39
  *                        np.int pos):
  * 
  *     cdef int n_vert = seg_true.shape[0]             # <<<<<<<<<<<<<<
@@ -1412,7 +1412,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_n_vert = (__pyx_v_seg_true->dimensions[0]);
 
-  /* "_malis.pyx":40
+  /* "malis/_malis.pyx":40
  * 
  *     cdef int n_vert = seg_true.shape[0]
  *     cdef int n_edge = node1.shape[0]             # <<<<<<<<<<<<<<
@@ -1421,7 +1421,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_n_edge = (__pyx_v_node1->dimensions[0]);
 
-  /* "_malis.pyx":41
+  /* "malis/_malis.pyx":41
  *     cdef int n_vert = seg_true.shape[0]
  *     cdef int n_edge = node1.shape[0]
  *     seg_true = np.ascontiguousarray(seg_true)             # <<<<<<<<<<<<<<
@@ -1480,7 +1480,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
   __Pyx_DECREF_SET(__pyx_v_seg_true, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":42
+  /* "malis/_malis.pyx":42
  *     cdef int n_edge = node1.shape[0]
  *     seg_true = np.ascontiguousarray(seg_true)
  *     node1 = np.ascontiguousarray(node1)             # <<<<<<<<<<<<<<
@@ -1539,7 +1539,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
   __Pyx_DECREF_SET(__pyx_v_node1, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":43
+  /* "malis/_malis.pyx":43
  *     seg_true = np.ascontiguousarray(seg_true)
  *     node1 = np.ascontiguousarray(node1)
  *     node2 = np.ascontiguousarray(node2)             # <<<<<<<<<<<<<<
@@ -1598,7 +1598,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
   __Pyx_DECREF_SET(__pyx_v_node2, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":44
+  /* "malis/_malis.pyx":44
  *     node1 = np.ascontiguousarray(node1)
  *     node2 = np.ascontiguousarray(node2)
  *     edge_weight = np.ascontiguousarray(edge_weight)             # <<<<<<<<<<<<<<
@@ -1657,7 +1657,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
   __Pyx_DECREF_SET(__pyx_v_edge_weight, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":45
+  /* "malis/_malis.pyx":45
  *     node2 = np.ascontiguousarray(node2)
  *     edge_weight = np.ascontiguousarray(edge_weight)
  *     cdef np.ndarray[np.int32_t,ndim=1] counts = np.zeros(edge_weight.shape[0],dtype=np.int32)             # <<<<<<<<<<<<<<
@@ -1704,7 +1704,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
   __pyx_v_counts = ((PyArrayObject *)__pyx_t_13);
   __pyx_t_13 = 0;
 
-  /* "_malis.pyx":48
+  /* "malis/_malis.pyx":48
  * 
  *     malis_loss_weights_cpp(n_vert,
  *                            <int*> &seg_true[0],             # <<<<<<<<<<<<<<
@@ -1722,7 +1722,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 48; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":50
+  /* "malis/_malis.pyx":50
  *                            <int*> &seg_true[0],
  *                            n_edge,
  *                            <int*> &node1[0],             # <<<<<<<<<<<<<<
@@ -1740,7 +1740,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 50; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":51
+  /* "malis/_malis.pyx":51
  *                            n_edge,
  *                            <int*> &node1[0],
  *                            <int*> &node2[0],             # <<<<<<<<<<<<<<
@@ -1758,7 +1758,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 51; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":52
+  /* "malis/_malis.pyx":52
  *                            <int*> &node1[0],
  *                            <int*> &node2[0],
  *                            <float*> &edge_weight[0],             # <<<<<<<<<<<<<<
@@ -1776,7 +1776,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 52; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":53
+  /* "malis/_malis.pyx":53
  *                            <int*> &node2[0],
  *                            <float*> &edge_weight[0],
  *                            pos,             # <<<<<<<<<<<<<<
@@ -1785,7 +1785,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
  */
   __pyx_t_6 = __Pyx_PyInt_As_int(__pyx_v_pos); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 53; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_malis.pyx":54
+  /* "malis/_malis.pyx":54
  *                            <float*> &edge_weight[0],
  *                            pos,
  *                            <int*> &counts[0])             # <<<<<<<<<<<<<<
@@ -1803,7 +1803,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 54; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":47
+  /* "malis/_malis.pyx":47
  *     cdef np.ndarray[np.int32_t,ndim=1] counts = np.zeros(edge_weight.shape[0],dtype=np.int32)
  * 
  *     malis_loss_weights_cpp(n_vert,             # <<<<<<<<<<<<<<
@@ -1812,7 +1812,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
  */
   malis_loss_weights_cpp(__pyx_v_n_vert, ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_seg_true.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_seg_true.diminfo[0].strides)))), __pyx_v_n_edge, ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_node1.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_node1.diminfo[0].strides)))), ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_node2.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_node2.diminfo[0].strides)))), ((float *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float32_t *, __pyx_pybuffernd_edge_weight.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_edge_weight.diminfo[0].strides)))), __pyx_t_6, ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_counts.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_counts.diminfo[0].strides)))));
 
-  /* "_malis.pyx":56
+  /* "malis/_malis.pyx":56
  *                            <int*> &counts[0])
  * 
  *     return counts             # <<<<<<<<<<<<<<
@@ -1824,7 +1824,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
   __pyx_r = ((PyObject *)__pyx_v_counts);
   goto __pyx_L0;
 
-  /* "_malis.pyx":33
+  /* "malis/_malis.pyx":33
  * 
  * 
  * def malis_loss_weights(np.ndarray[np.int32_t,  ndim=1] seg_true,             # <<<<<<<<<<<<<<
@@ -1847,7 +1847,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_node2.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_seg_true.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("_malis.malis_loss_weights", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("malis._malis.malis_loss_weights", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -1867,7 +1867,7 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "_malis.pyx":60
+/* "malis/_malis.pyx":60
  * 
  * 
  * def connected_components(np.int n_vert,             # <<<<<<<<<<<<<<
@@ -1876,9 +1876,9 @@ static PyObject *__pyx_pf_6_malis_malis_loss_weights(CYTHON_UNUSED PyObject *__p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6_malis_3connected_components(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6_malis_3connected_components = {"connected_components", (PyCFunction)__pyx_pw_6_malis_3connected_components, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6_malis_3connected_components(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_5malis_6_malis_3connected_components(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_5malis_6_malis_3connected_components = {"connected_components", (PyCFunction)__pyx_pw_5malis_6_malis_3connected_components, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5malis_6_malis_3connected_components(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_n_vert = 0;
   PyArrayObject *__pyx_v_node1 = 0;
   PyArrayObject *__pyx_v_node2 = 0;
@@ -1959,7 +1959,7 @@ static PyObject *__pyx_pw_6_malis_3connected_components(PyObject *__pyx_self, Py
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("connected_components", 0, 4, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("_malis.connected_components", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("malis._malis.connected_components", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
@@ -1967,7 +1967,7 @@ static PyObject *__pyx_pw_6_malis_3connected_components(PyObject *__pyx_self, Py
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_node1), __pyx_ptype_5numpy_ndarray, 1, "node1", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 61; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_node2), __pyx_ptype_5numpy_ndarray, 1, "node2", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 62; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_edge_weight), __pyx_ptype_5numpy_ndarray, 1, "edge_weight", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = __pyx_pf_6_malis_2connected_components(__pyx_self, __pyx_v_n_vert, __pyx_v_node1, __pyx_v_node2, __pyx_v_edge_weight, __pyx_v_size_thresh);
+  __pyx_r = __pyx_pf_5malis_6_malis_2connected_components(__pyx_self, __pyx_v_n_vert, __pyx_v_node1, __pyx_v_node2, __pyx_v_edge_weight, __pyx_v_size_thresh);
 
   /* function exit code */
   goto __pyx_L0;
@@ -1978,7 +1978,7 @@ static PyObject *__pyx_pw_6_malis_3connected_components(PyObject *__pyx_self, Py
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n_vert, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, int __pyx_v_size_thresh) {
+static PyObject *__pyx_pf_5malis_6_malis_2connected_components(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_n_vert, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, int __pyx_v_size_thresh) {
   int __pyx_v_n_edge;
   PyArrayObject *__pyx_v_seg = 0;
   PyObject *__pyx_v_unique = NULL;
@@ -2054,7 +2054,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   }
   __pyx_pybuffernd_edge_weight.diminfo[0].strides = __pyx_pybuffernd_edge_weight.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_edge_weight.diminfo[0].shape = __pyx_pybuffernd_edge_weight.rcbuffer->pybuffer.shape[0];
 
-  /* "_malis.pyx":66
+  /* "malis/_malis.pyx":66
  *                          int size_thresh=1):
  * 
  *     cdef int n_edge = node1.shape[0]             # <<<<<<<<<<<<<<
@@ -2063,7 +2063,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
  */
   __pyx_v_n_edge = (__pyx_v_node1->dimensions[0]);
 
-  /* "_malis.pyx":67
+  /* "malis/_malis.pyx":67
  * 
  *     cdef int n_edge = node1.shape[0]
  *     node1 = np.ascontiguousarray(node1)             # <<<<<<<<<<<<<<
@@ -2122,7 +2122,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   __Pyx_DECREF_SET(__pyx_v_node1, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":68
+  /* "malis/_malis.pyx":68
  *     cdef int n_edge = node1.shape[0]
  *     node1 = np.ascontiguousarray(node1)
  *     node2 = np.ascontiguousarray(node2)             # <<<<<<<<<<<<<<
@@ -2181,7 +2181,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   __Pyx_DECREF_SET(__pyx_v_node2, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":69
+  /* "malis/_malis.pyx":69
  *     node1 = np.ascontiguousarray(node1)
  *     node2 = np.ascontiguousarray(node2)
  *     edge_weight = np.ascontiguousarray(edge_weight)             # <<<<<<<<<<<<<<
@@ -2240,7 +2240,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   __Pyx_DECREF_SET(__pyx_v_edge_weight, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":70
+  /* "malis/_malis.pyx":70
  *     node2 = np.ascontiguousarray(node2)
  *     edge_weight = np.ascontiguousarray(edge_weight)
  *     cdef np.ndarray[np.int32_t,ndim=1] seg = np.zeros(n_vert,dtype=np.int32)             # <<<<<<<<<<<<<<
@@ -2285,7 +2285,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   __pyx_v_seg = ((PyArrayObject *)__pyx_t_12);
   __pyx_t_12 = 0;
 
-  /* "_malis.pyx":72
+  /* "malis/_malis.pyx":72
  *     cdef np.ndarray[np.int32_t,ndim=1] seg = np.zeros(n_vert,dtype=np.int32)
  * 
  *     connected_components_cpp(n_vert,             # <<<<<<<<<<<<<<
@@ -2294,7 +2294,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
  */
   __pyx_t_6 = __Pyx_PyInt_As_int(__pyx_v_n_vert); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_malis.pyx":74
+  /* "malis/_malis.pyx":74
  *     connected_components_cpp(n_vert,
  *                              n_edge,
  *                              <int*> &node1[0],             # <<<<<<<<<<<<<<
@@ -2312,7 +2312,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":75
+  /* "malis/_malis.pyx":75
  *                              n_edge,
  *                              <int*> &node1[0],
  *                              <int*> &node2[0],             # <<<<<<<<<<<<<<
@@ -2330,7 +2330,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 75; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":76
+  /* "malis/_malis.pyx":76
  *                              <int*> &node1[0],
  *                              <int*> &node2[0],
  *                              <float*> &edge_weight[0],             # <<<<<<<<<<<<<<
@@ -2348,7 +2348,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 76; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":78
+  /* "malis/_malis.pyx":78
  *                              <float*> &edge_weight[0],
  *                              size_thresh,
  *                              <int*> &seg[0])             # <<<<<<<<<<<<<<
@@ -2366,7 +2366,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":72
+  /* "malis/_malis.pyx":72
  *     cdef np.ndarray[np.int32_t,ndim=1] seg = np.zeros(n_vert,dtype=np.int32)
  * 
  *     connected_components_cpp(n_vert,             # <<<<<<<<<<<<<<
@@ -2375,11 +2375,11 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
  */
   connected_components_cpp(__pyx_t_6, __pyx_v_n_edge, ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_node1.rcbuffer->pybuffer.buf, __pyx_t_14, __pyx_pybuffernd_node1.diminfo[0].strides)))), ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_node2.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_node2.diminfo[0].strides)))), ((float *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float32_t *, __pyx_pybuffernd_edge_weight.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_edge_weight.diminfo[0].strides)))), __pyx_v_size_thresh, ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_seg.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_seg.diminfo[0].strides)))));
 
-  /* "_malis.pyx":80
+  /* "malis/_malis.pyx":80
  *                              <int*> &seg[0])
  * 
  *     unique, new_seg, seg_sizes = np.unique(seg, return_inverse=True, return_counts=True)             # <<<<<<<<<<<<<<
- *     if 0 not in unique: # if no bg present, new_seg will still have 0 component
+ *     if 0 not in unique: # if no BG present, new_seg will still have 0 component
  *         new_seg[new_seg==0] = unique[-1]+1 # we need to rename that one!
  */
   __pyx_t_12 = __Pyx_GetModuleGlobalName(__pyx_n_s_np); if (unlikely(!__pyx_t_12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -2465,10 +2465,10 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   __pyx_v_seg_sizes = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "_malis.pyx":81
+  /* "malis/_malis.pyx":81
  * 
  *     unique, new_seg, seg_sizes = np.unique(seg, return_inverse=True, return_counts=True)
- *     if 0 not in unique: # if no bg present, new_seg will still have 0 component             # <<<<<<<<<<<<<<
+ *     if 0 not in unique: # if no BG present, new_seg will still have 0 component             # <<<<<<<<<<<<<<
  *         new_seg[new_seg==0] = unique[-1]+1 # we need to rename that one!
  * 
  */
@@ -2476,9 +2476,9 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   __pyx_t_21 = (__pyx_t_20 != 0);
   if (__pyx_t_21) {
 
-    /* "_malis.pyx":82
+    /* "malis/_malis.pyx":82
  *     unique, new_seg, seg_sizes = np.unique(seg, return_inverse=True, return_counts=True)
- *     if 0 not in unique: # if no bg present, new_seg will still have 0 component
+ *     if 0 not in unique: # if no BG present, new_seg will still have 0 component
  *         new_seg[new_seg==0] = unique[-1]+1 # we need to rename that one!             # <<<<<<<<<<<<<<
  * 
  *     new_seg = new_seg.astype(np.int32)
@@ -2496,7 +2496,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   }
   __pyx_L5:;
 
-  /* "_malis.pyx":84
+  /* "malis/_malis.pyx":84
  *         new_seg[new_seg==0] = unique[-1]+1 # we need to rename that one!
  * 
  *     new_seg = new_seg.astype(np.int32)             # <<<<<<<<<<<<<<
@@ -2539,7 +2539,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   __Pyx_DECREF_SET(__pyx_v_new_seg, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "_malis.pyx":86
+  /* "malis/_malis.pyx":86
  *     new_seg = new_seg.astype(np.int32)
  * 
  *     assert np.all( (seg==0)==(new_seg==0) ), "The background label was messed up"             # <<<<<<<<<<<<<<
@@ -2593,7 +2593,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   }
   #endif
 
-  /* "_malis.pyx":88
+  /* "malis/_malis.pyx":88
  *     assert np.all( (seg==0)==(new_seg==0) ), "The background label was messed up"
  * 
  *     return new_seg, seg_sizes             # <<<<<<<<<<<<<<
@@ -2613,7 +2613,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "_malis.pyx":60
+  /* "malis/_malis.pyx":60
  * 
  * 
  * def connected_components(np.int n_vert,             # <<<<<<<<<<<<<<
@@ -2635,7 +2635,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_node2.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_seg.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("_malis.connected_components", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("malis._malis.connected_components", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2656,7 +2656,7 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
   return __pyx_r;
 }
 
-/* "_malis.pyx":93
+/* "malis/_malis.pyx":93
  * 
  * 
  * def marker_watershed(np.ndarray[np.int32_t,  ndim=1] marker,             # <<<<<<<<<<<<<<
@@ -2665,9 +2665,9 @@ static PyObject *__pyx_pf_6_malis_2connected_components(CYTHON_UNUSED PyObject *
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6_malis_5marker_watershed(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_6_malis_5marker_watershed = {"marker_watershed", (PyCFunction)__pyx_pw_6_malis_5marker_watershed, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6_malis_5marker_watershed(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_5malis_6_malis_5marker_watershed(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_5malis_6_malis_5marker_watershed = {"marker_watershed", (PyCFunction)__pyx_pw_5malis_6_malis_5marker_watershed, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_5malis_6_malis_5marker_watershed(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_marker = 0;
   PyArrayObject *__pyx_v_node1 = 0;
   PyArrayObject *__pyx_v_node2 = 0;
@@ -2748,7 +2748,7 @@ static PyObject *__pyx_pw_6_malis_5marker_watershed(PyObject *__pyx_self, PyObje
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("marker_watershed", 0, 4, 5, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
-  __Pyx_AddTraceback("_malis.marker_watershed", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("malis._malis.marker_watershed", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
@@ -2756,7 +2756,7 @@ static PyObject *__pyx_pw_6_malis_5marker_watershed(PyObject *__pyx_self, PyObje
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_node1), __pyx_ptype_5numpy_ndarray, 1, "node1", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 94; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_node2), __pyx_ptype_5numpy_ndarray, 1, "node2", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 95; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_edge_weight), __pyx_ptype_5numpy_ndarray, 1, "edge_weight", 0))) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 96; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_r = __pyx_pf_6_malis_4marker_watershed(__pyx_self, __pyx_v_marker, __pyx_v_node1, __pyx_v_node2, __pyx_v_edge_weight, __pyx_v_size_thresh);
+  __pyx_r = __pyx_pf_5malis_6_malis_4marker_watershed(__pyx_self, __pyx_v_marker, __pyx_v_node1, __pyx_v_node2, __pyx_v_edge_weight, __pyx_v_size_thresh);
 
   /* function exit code */
   goto __pyx_L0;
@@ -2767,7 +2767,7 @@ static PyObject *__pyx_pw_6_malis_5marker_watershed(PyObject *__pyx_self, PyObje
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_marker, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, int __pyx_v_size_thresh) {
+static PyObject *__pyx_pf_5malis_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_marker, PyArrayObject *__pyx_v_node1, PyArrayObject *__pyx_v_node2, PyArrayObject *__pyx_v_edge_weight, int __pyx_v_size_thresh) {
   int __pyx_v_n_vert;
   int __pyx_v_n_edge;
   PyArrayObject *__pyx_v_seg = 0;
@@ -2856,7 +2856,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
   }
   __pyx_pybuffernd_edge_weight.diminfo[0].strides = __pyx_pybuffernd_edge_weight.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_edge_weight.diminfo[0].shape = __pyx_pybuffernd_edge_weight.rcbuffer->pybuffer.shape[0];
 
-  /* "_malis.pyx":99
+  /* "malis/_malis.pyx":99
  *                      int size_thresh=1):
  * 
  *     cdef int n_vert = marker.shape[0]             # <<<<<<<<<<<<<<
@@ -2865,7 +2865,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
  */
   __pyx_v_n_vert = (__pyx_v_marker->dimensions[0]);
 
-  /* "_malis.pyx":100
+  /* "malis/_malis.pyx":100
  * 
  *     cdef int n_vert = marker.shape[0]
  *     cdef int n_edge = node1.shape[0]             # <<<<<<<<<<<<<<
@@ -2874,7 +2874,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
  */
   __pyx_v_n_edge = (__pyx_v_node1->dimensions[0]);
 
-  /* "_malis.pyx":101
+  /* "malis/_malis.pyx":101
  *     cdef int n_vert = marker.shape[0]
  *     cdef int n_edge = node1.shape[0]
  *     marker = np.ascontiguousarray(marker)             # <<<<<<<<<<<<<<
@@ -2933,7 +2933,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
   __Pyx_DECREF_SET(__pyx_v_marker, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":102
+  /* "malis/_malis.pyx":102
  *     cdef int n_edge = node1.shape[0]
  *     marker = np.ascontiguousarray(marker)
  *     node1 = np.ascontiguousarray(node1)             # <<<<<<<<<<<<<<
@@ -2992,7 +2992,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
   __Pyx_DECREF_SET(__pyx_v_node1, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":103
+  /* "malis/_malis.pyx":103
  *     marker = np.ascontiguousarray(marker)
  *     node1 = np.ascontiguousarray(node1)
  *     node2 = np.ascontiguousarray(node2)             # <<<<<<<<<<<<<<
@@ -3051,7 +3051,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
   __Pyx_DECREF_SET(__pyx_v_node2, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":104
+  /* "malis/_malis.pyx":104
  *     node1 = np.ascontiguousarray(node1)
  *     node2 = np.ascontiguousarray(node2)
  *     edge_weight = np.ascontiguousarray(edge_weight)             # <<<<<<<<<<<<<<
@@ -3110,7 +3110,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
   __Pyx_DECREF_SET(__pyx_v_edge_weight, ((PyArrayObject *)__pyx_t_1));
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":105
+  /* "malis/_malis.pyx":105
  *     node2 = np.ascontiguousarray(node2)
  *     edge_weight = np.ascontiguousarray(edge_weight)
  *     cdef np.ndarray[np.int32_t,ndim=1] seg = np.zeros(n_vert,dtype=np.int32)             # <<<<<<<<<<<<<<
@@ -3157,7 +3157,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
   __pyx_v_seg = ((PyArrayObject *)__pyx_t_13);
   __pyx_t_13 = 0;
 
-  /* "_malis.pyx":108
+  /* "malis/_malis.pyx":108
  * 
  *     marker_watershed_cpp(n_vert,
  *                          <int*> &marker[0],             # <<<<<<<<<<<<<<
@@ -3175,7 +3175,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":110
+  /* "malis/_malis.pyx":110
  *                          <int*> &marker[0],
  *                          n_edge,
  *                          <int*> &node1[0],             # <<<<<<<<<<<<<<
@@ -3193,7 +3193,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 110; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":111
+  /* "malis/_malis.pyx":111
  *                          n_edge,
  *                          <int*> &node1[0],
  *                          <int*> &node2[0],             # <<<<<<<<<<<<<<
@@ -3211,7 +3211,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 111; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":112
+  /* "malis/_malis.pyx":112
  *                          <int*> &node1[0],
  *                          <int*> &node2[0],
  *                          <float*> &edge_weight[0],             # <<<<<<<<<<<<<<
@@ -3229,7 +3229,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":114
+  /* "malis/_malis.pyx":114
  *                          <float*> &edge_weight[0],
  *                          size_thresh,
  *                          <int*> &seg[0])             # <<<<<<<<<<<<<<
@@ -3247,7 +3247,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
     {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "_malis.pyx":107
+  /* "malis/_malis.pyx":107
  *     cdef np.ndarray[np.int32_t,ndim=1] seg = np.zeros(n_vert,dtype=np.int32)
  * 
  *     marker_watershed_cpp(n_vert,             # <<<<<<<<<<<<<<
@@ -3256,7 +3256,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
  */
   marker_watershed_cpp(__pyx_v_n_vert, ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_marker.rcbuffer->pybuffer.buf, __pyx_t_15, __pyx_pybuffernd_marker.diminfo[0].strides)))), __pyx_v_n_edge, ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_node1.rcbuffer->pybuffer.buf, __pyx_t_16, __pyx_pybuffernd_node1.diminfo[0].strides)))), ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_node2.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_node2.diminfo[0].strides)))), ((float *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_float32_t *, __pyx_pybuffernd_edge_weight.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_edge_weight.diminfo[0].strides)))), __pyx_v_size_thresh, ((int *)(&(*__Pyx_BufPtrStrided1d(__pyx_t_5numpy_int32_t *, __pyx_pybuffernd_seg.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_seg.diminfo[0].strides)))));
 
-  /* "_malis.pyx":116
+  /* "malis/_malis.pyx":116
  *                          <int*> &seg[0])
  * 
  *     unique, new_seg, seg_sizes = np.unique(seg, return_inverse=True, return_counts=True)             # <<<<<<<<<<<<<<
@@ -3346,7 +3346,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
   __pyx_v_seg_sizes = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "_malis.pyx":117
+  /* "malis/_malis.pyx":117
  * 
  *     unique, new_seg, seg_sizes = np.unique(seg, return_inverse=True, return_counts=True)
  *     new_seg = new_seg.astype(np.int32)             # <<<<<<<<<<<<<<
@@ -3389,7 +3389,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
   __Pyx_DECREF_SET(__pyx_v_new_seg, __pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "_malis.pyx":118
+  /* "malis/_malis.pyx":118
  *     unique, new_seg, seg_sizes = np.unique(seg, return_inverse=True, return_counts=True)
  *     new_seg = new_seg.astype(np.int32)
  *     assert np.all( (seg==0)==(new_seg==0) ), "The background label was messed up"             # <<<<<<<<<<<<<<
@@ -3442,7 +3442,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
   }
   #endif
 
-  /* "_malis.pyx":119
+  /* "malis/_malis.pyx":119
  *     new_seg = new_seg.astype(np.int32)
  *     assert np.all( (seg==0)==(new_seg==0) ), "The background label was messed up"
  *     return new_seg, seg_sizes             # <<<<<<<<<<<<<<
@@ -3460,7 +3460,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "_malis.pyx":93
+  /* "malis/_malis.pyx":93
  * 
  * 
  * def marker_watershed(np.ndarray[np.int32_t,  ndim=1] marker,             # <<<<<<<<<<<<<<
@@ -3483,7 +3483,7 @@ static PyObject *__pyx_pf_6_malis_4marker_watershed(CYTHON_UNUSED PyObject *__py
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_node2.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_seg.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("_malis.marker_watershed", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("malis._malis.marker_watershed", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -5538,13 +5538,13 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_astype, __pyx_k_astype, sizeof(__pyx_k_astype), 0, 0, 1, 1},
   {&__pyx_n_s_connected_components, __pyx_k_connected_components, sizeof(__pyx_k_connected_components), 0, 0, 1, 1},
   {&__pyx_n_s_counts, __pyx_k_counts, sizeof(__pyx_k_counts), 0, 0, 1, 1},
-  {&__pyx_kp_s_docs_devel_malis__malis_pyx, __pyx_k_docs_devel_malis__malis_pyx, sizeof(__pyx_k_docs_devel_malis__malis_pyx), 0, 0, 1, 0},
+  {&__pyx_kp_s_docs_devel_malis_malis__malis_p, __pyx_k_docs_devel_malis_malis__malis_p, sizeof(__pyx_k_docs_devel_malis_malis__malis_p), 0, 0, 1, 0},
   {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
   {&__pyx_n_s_edge_weight, __pyx_k_edge_weight, sizeof(__pyx_k_edge_weight), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_int32, __pyx_k_int32, sizeof(__pyx_k_int32), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
-  {&__pyx_n_s_malis, __pyx_k_malis, sizeof(__pyx_k_malis), 0, 0, 1, 1},
+  {&__pyx_n_s_malis__malis, __pyx_k_malis__malis, sizeof(__pyx_k_malis__malis), 0, 0, 1, 1},
   {&__pyx_n_s_malis_loss_weights, __pyx_k_malis_loss_weights, sizeof(__pyx_k_malis_loss_weights), 0, 0, 1, 1},
   {&__pyx_n_s_marker, __pyx_k_marker, sizeof(__pyx_k_marker), 0, 0, 1, 1},
   {&__pyx_n_s_marker_watershed, __pyx_k_marker_watershed, sizeof(__pyx_k_marker_watershed), 0, 0, 1, 1},
@@ -5650,7 +5650,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "_malis.pyx":33
+  /* "malis/_malis.pyx":33
  * 
  * 
  * def malis_loss_weights(np.ndarray[np.int32_t,  ndim=1] seg_true,             # <<<<<<<<<<<<<<
@@ -5660,9 +5660,9 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__7 = PyTuple_Pack(8, __pyx_n_s_seg_true, __pyx_n_s_node1, __pyx_n_s_node2, __pyx_n_s_edge_weight, __pyx_n_s_pos, __pyx_n_s_n_vert, __pyx_n_s_n_edge, __pyx_n_s_counts); if (unlikely(!__pyx_tuple__7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(5, 0, 8, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_docs_devel_malis__malis_pyx, __pyx_n_s_malis_loss_weights, 33, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(5, 0, 8, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_docs_devel_malis_malis__malis_p, __pyx_n_s_malis_loss_weights, 33, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_malis.pyx":60
+  /* "malis/_malis.pyx":60
  * 
  * 
  * def connected_components(np.int n_vert,             # <<<<<<<<<<<<<<
@@ -5672,9 +5672,9 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__9 = PyTuple_Pack(10, __pyx_n_s_n_vert, __pyx_n_s_node1, __pyx_n_s_node2, __pyx_n_s_edge_weight, __pyx_n_s_size_thresh, __pyx_n_s_n_edge, __pyx_n_s_seg, __pyx_n_s_unique, __pyx_n_s_new_seg, __pyx_n_s_seg_sizes); if (unlikely(!__pyx_tuple__9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(5, 0, 10, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_docs_devel_malis__malis_pyx, __pyx_n_s_connected_components, 60, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(5, 0, 10, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_docs_devel_malis_malis__malis_p, __pyx_n_s_connected_components, 60, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "_malis.pyx":93
+  /* "malis/_malis.pyx":93
  * 
  * 
  * def marker_watershed(np.ndarray[np.int32_t,  ndim=1] marker,             # <<<<<<<<<<<<<<
@@ -5684,7 +5684,7 @@ static int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__11 = PyTuple_Pack(11, __pyx_n_s_marker, __pyx_n_s_node1, __pyx_n_s_node2, __pyx_n_s_edge_weight, __pyx_n_s_size_thresh, __pyx_n_s_n_vert, __pyx_n_s_n_edge, __pyx_n_s_seg, __pyx_n_s_unique, __pyx_n_s_new_seg, __pyx_n_s_seg_sizes); if (unlikely(!__pyx_tuple__11)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__11);
   __Pyx_GIVEREF(__pyx_tuple__11);
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(5, 0, 11, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_docs_devel_malis__malis_pyx, __pyx_n_s_marker_watershed, 93, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(5, 0, 11, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__11, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_docs_devel_malis_malis__malis_p, __pyx_n_s_marker_watershed, 93, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -5762,14 +5762,14 @@ PyMODINIT_FUNC PyInit__malis(void)
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   #endif
-  if (__pyx_module_is_main__malis) {
+  if (__pyx_module_is_main_malis___malis) {
     if (PyObject_SetAttrString(__pyx_m, "__name__", __pyx_n_s_main) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    if (!PyDict_GetItemString(modules, "_malis")) {
-      if (unlikely(PyDict_SetItemString(modules, "_malis", __pyx_m) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    if (!PyDict_GetItemString(modules, "malis._malis")) {
+      if (unlikely(PyDict_SetItemString(modules, "malis._malis", __pyx_m) < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
   }
   #endif
@@ -5798,7 +5798,7 @@ PyMODINIT_FUNC PyInit__malis(void)
   /*--- Function import code ---*/
   /*--- Execution code ---*/
 
-  /* "_malis.pyx":1
+  /* "malis/_malis.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as np
  * 
@@ -5808,43 +5808,43 @@ PyMODINIT_FUNC PyInit__malis(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 1; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_malis.pyx":33
+  /* "malis/_malis.pyx":33
  * 
  * 
  * def malis_loss_weights(np.ndarray[np.int32_t,  ndim=1] seg_true,             # <<<<<<<<<<<<<<
  *                        np.ndarray[np.int32_t,  ndim=1] node1,
  *                        np.ndarray[np.int32_t,  ndim=1] node2,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6_malis_1malis_loss_weights, NULL, __pyx_n_s_malis); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5malis_6_malis_1malis_loss_weights, NULL, __pyx_n_s_malis__malis); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_malis_loss_weights, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 33; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_malis.pyx":60
+  /* "malis/_malis.pyx":60
  * 
  * 
  * def connected_components(np.int n_vert,             # <<<<<<<<<<<<<<
  *                          np.ndarray[np.int32_t,ndim=1] node1,
  *                          np.ndarray[np.int32_t,ndim=1] node2,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6_malis_3connected_components, NULL, __pyx_n_s_malis); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5malis_6_malis_3connected_components, NULL, __pyx_n_s_malis__malis); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_connected_components, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 60; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_malis.pyx":93
+  /* "malis/_malis.pyx":93
  * 
  * 
  * def marker_watershed(np.ndarray[np.int32_t,  ndim=1] marker,             # <<<<<<<<<<<<<<
  *                      np.ndarray[np.int32_t,  ndim=1] node1,
  *                      np.ndarray[np.int32_t,  ndim=1] node2,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_6_malis_5marker_watershed, NULL, __pyx_n_s_malis); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5malis_6_malis_5marker_watershed, NULL, __pyx_n_s_malis__malis); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_marker_watershed, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "_malis.pyx":1
+  /* "malis/_malis.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as np
  * 
@@ -5869,11 +5869,11 @@ PyMODINIT_FUNC PyInit__malis(void)
   __Pyx_XDECREF(__pyx_t_1);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init _malis", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init malis._malis", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_DECREF(__pyx_m); __pyx_m = 0;
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init _malis");
+    PyErr_SetString(PyExc_ImportError, "init malis._malis");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
