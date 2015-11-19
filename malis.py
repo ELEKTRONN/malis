@@ -350,8 +350,44 @@ class GetMalisWeights(object):
     def __init__(self):
         self.edgelist_cache = dict()
         
-    def __call__(self, affinity_pred, affinity_gt, seg_gt, nhood):
+    def __call__(self, affinity_pred, affinity_gt, seg_gt, nhood,
+                 unrestrict_neg=False):
+        """
+        Computes MALIS loss weights
+        
+        Roughly speaking the malis weights quantify the impact of an edge in
+        the predicted affinity graph on the resulting segmentation.
+    
+        Parameters
+        ----------
+        affinity_pred: 4d np.ndarray float32
+            Affinity graph of shape (#edges, x, y, z)
+            1: connected, 0: disconnected        
+        affinity_gt: 4d np.ndarray int16
+            Affinity graph of shape (#edges, x, y, z)
+            1: connected, 0: disconnected 
+        seg_gt: 3d np.ndarray, int (any precision)
+            Volume of segmentation IDs        
+        nhood: 2d np.ndarray, int
+            Neighbourhood pattern specifying the edges in the affinity graph
+            Shape: (#edges, ndim)
+            nhood[i] contains the displacement coordinates of edge i
+            The number and order of edges is arbitrary
+        unrestrict_neg: Bool
+            Use this to relax the restriction on neg_counts. The restriction
+            modifies the edge weights for before calculating the negative counts
+            as: ``edge_weights_neg = np.maximum(affinity_pred, affinity_gt)``
+            If unrestricted the predictions are used directly.
 
+            
+        Returns
+        -------
+        
+        pos_counts: 4d np.ndarray int32
+          Impact counts for edges that should be 1 (connect)      
+        neg_counts: 4d np.ndarray int32
+          Impact counts for edges that should be 0 (disconnect)           
+        """
         sh     = affinity_pred.shape
         vol_sh = sh[1:]
         key = (vol_sh, nhood.tobytes()) # cannot hash np.ndarray directly
@@ -374,13 +410,17 @@ class GetMalisWeights(object):
                                         node2,
                                         edge_weights_pos,
                                         1)
-                                        
-        edge_weights_neg = np.maximum(affinity_pred, affinity_gt)
+        if unrestrict_neg:                               
+            edge_weights_neg = affinity_pred
+        else:
+            edge_weights_neg = np.maximum(affinity_pred, affinity_gt)
+            
+            
         neg_counts = malis_loss_weights(seg_gt,
                                         node1,
                                         node2,
                                         edge_weights_neg,
-                                        0)
+                                        0)                           
         
         pos_counts = pos_counts.reshape(sh)
         neg_counts = neg_counts.reshape(sh)
@@ -497,7 +537,3 @@ def watershed_from_affgraph(aff, seeds, nhood):
 #        return pos_counts, neg_counts, seg_gt    
 #
 #get_malis_weights_seg = GetMalisWeightsSeg()  
-
-      
-if __name__=="__main__":
-    pass   

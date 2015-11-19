@@ -191,3 +191,22 @@ if __name__=="__main__":
          
     assert np.allclose(g[0],g_true)
     assert np.allclose(pos,pos_true)
+    
+    nhood = np.array([[ 0.,  1.,  0.],
+                      [ 0.,  0.,  1.]]) 
+                        
+    test_id2 = np.array([[[1, 1, 2, 2, 0, 3],
+                          [1, 1, 2, 2, 0, 3],
+                          [1, 1, 2, 2, 0, 3],
+                          [1, 1, 2, 2, 0, 3]]], dtype=np.int32)
+                      
+    aff_gt   = malis.seg_to_affgraph(test_id2, nhood)                  
+    aff_pred = np.array([ [[[ 1.,  1.,  1.,  1.,  0., 1.],
+                            [ 1.,  1.,  1.,  1.,   0., 1.],
+                            [ 0.9, 0.8, 1.,  1.,  0., 1.],
+                            [ 0.,  0.,  0.,  0.,  0., 1.]]],
+                          
+                          [[[ 1.,  0.,  1.,  0.3, 0.4,0.],
+                            [ 0.7, 0.,  1.,  0.,  0., 0.],
+                            [ 1.,  0.2, 1.,  0.,  0., 0.],
+                            [ 1.,  0.,  1.,  0.,  0., 0.]]] ]).astype(np.float32)    
