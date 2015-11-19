@@ -9,7 +9,6 @@ import scipy.sparse
 
 from _malis import malis_loss_weights, connected_components, marker_watershed
 
-
 __all__ = ['compute_V_rand_N2',
            'mknhood2d',
            'mknhood3d',
@@ -17,7 +16,7 @@ __all__ = ['compute_V_rand_N2',
            'bmap_to_affgraph',
            'seg_to_affgraph',
            'affgraph_to_seg',
-           'get_malis_weights',
+           'malis_weights',
            'watershed_from_affgraph']
 
 def compute_V_rand_N2(seg_true, seg_pred):
@@ -320,7 +319,7 @@ affgraph_to_seg = AffgraphToSeg()
 
 
 
-class GetMalisWeights(object):
+class MalisWeights(object):
     """
     Computes MALIS loss weights
     
@@ -431,7 +430,7 @@ class GetMalisWeights(object):
         
         return pos_counts, neg_counts  
 
-get_malis_weights = GetMalisWeights()
+malis_weights = MalisWeights()
 
 
 

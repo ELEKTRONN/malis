@@ -10,9 +10,11 @@ from theano import gof
 import theano.tensor as T
 from theano.gradient import disconnected_type
 
-from malis import get_malis_weights
+import malis_utils
 
-class Malis(theano.Op):
+__all__ = ['malis_weights']
+
+class MalisWeights(theano.Op):
     """
     Computes MALIS loss weights
     
@@ -97,10 +99,10 @@ class Malis(theano.Op):
     def perform(self, node, inputs, output_storage):
       affinity_pred, affinity_gt, seg_gt, nhood = inputs
       pos, neg = output_storage   
-      pos[0], neg[0] = get_malis_weights(affinity_pred,
-                                         affinity_gt,
-                                         seg_gt,
-                                         nhood)
+      pos[0], neg[0] = malis_utils.malis_weights(affinity_pred,
+                                                 affinity_gt,
+                                                 seg_gt,
+                                                 nhood)
 
     def grad(self, inputs, outputs_gradients):
       # The gradient of all outputs is 0 w.r.t to all inputs
@@ -110,7 +112,7 @@ class Malis(theano.Op):
       # The gradient of all outputs is 0 w.r.t to all inputs
       return [[False, False],]*4
            
-malis_weights = Malis()
+malis_weights = MalisWeights()
 
 
 
@@ -118,7 +120,6 @@ if __name__=="__main__":
     import theano.sandbox.cuda
     theano.sandbox.cuda.use("gpu0")
     import theano
-    import malis
     
     print "TESTING/DEMO:"
 
@@ -144,8 +145,8 @@ if __name__=="__main__":
                           [1, 1, 2, 2, 0, 3],
                           [1, 1, 2, 2, 0, 3]]], dtype=np.int32)
                       
-    aff_gt   = malis.seg_to_affgraph(test_id2, nhood)
-    seg_gt   = malis.affgraph_to_seg(aff_gt, nhood)[0].astype(np.int16)          
+    aff_gt   = malis_utils.seg_to_affgraph(test_id2, nhood)
+    seg_gt   = malis_utils.affgraph_to_seg(aff_gt, nhood)[0].astype(np.int16)          
     aff_pred = np.array([ [[[ 1.,  1.,  1.,  1.,  0., 1.],
                             [ 1.,  1.,  1.,  1.,   0., 1.],
                             [ 0.9, 0.8, 1.,  1.,  0., 1.],
@@ -201,7 +202,7 @@ if __name__=="__main__":
                           [1, 1, 2, 2, 0, 3],
                           [1, 1, 2, 2, 0, 3]]], dtype=np.int32)
                       
-    aff_gt   = malis.seg_to_affgraph(test_id2, nhood)                  
+    aff_gt   = malis_utils.seg_to_affgraph(test_id2, nhood)                  
     aff_pred = np.array([ [[[ 1.,  1.,  1.,  1.,  0., 1.],
                             [ 1.,  1.,  1.,  1.,   0., 1.],
                             [ 0.9, 0.8, 1.,  1.,  0., 1.],
