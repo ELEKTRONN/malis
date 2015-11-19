@@ -9,3 +9,16 @@ SC Turaga, KL Briggman, M Helmstaedter, W Denk, HS Seung (2009). *Maximin learni
 
 http://papers.nips.cc/paper/3887-maximin-affinity-learning-of-image-segmentation
 
+Installation
+============
+
+For installation as python package: download and run inside directory
+
+	pip install . (pip-install options)
+
+(or use URL of github repo instead of '.' to let pip download the files)
+
+
+Building c++ extension only: download and run inside directory
+
+	./make.sh

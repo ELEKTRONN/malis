@@ -109,9 +109,10 @@ class Malis(theano.Op):
     def connection_pattern(self, node):
       # The gradient of all outputs is 0 w.r.t to all inputs
       return [[False, False],]*4
-      
-      
+           
 malis_weights = Malis()
+
+
 
 if __name__=="__main__":
     import theano.sandbox.cuda
@@ -144,7 +145,7 @@ if __name__=="__main__":
                           [1, 1, 2, 2, 0, 3]]], dtype=np.int32)
                       
     aff_gt   = malis.seg_to_affgraph(test_id2, nhood)
-    seg_gt   = malis.affgraph_to_seg(aff_gt, nhood).astype(np.int16)             
+    seg_gt   = malis.affgraph_to_seg(aff_gt, nhood)[0].astype(np.int16)          
     aff_pred = np.array([ [[[ 1.,  1.,  1.,  1.,  0., 1.],
                             [ 1.,  1.,  1.,  1.,   0., 1.],
                             [ 0.9, 0.8, 1.,  1.,  0., 1.],

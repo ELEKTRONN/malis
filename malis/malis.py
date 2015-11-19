@@ -18,7 +18,6 @@ __all__ = ['compute_V_rand_N2',
            'seg_to_affgraph',
            'affgraph_to_seg',
            'get_malis_weights',
-           'connected_components_from_affgraph',
            'watershed_from_affgraph']
 
 def compute_V_rand_N2(seg_true, seg_pred):
@@ -315,9 +314,10 @@ class AffgraphToSeg(object):
                                               size_thresh)
         seg_gt = seg_gt.reshape(vol_sh)
         
-        return seg_gt
+        return seg_gt, seg_sizes
         
 affgraph_to_seg = AffgraphToSeg()     
+
 
 
 class GetMalisWeights(object):
@@ -467,13 +467,6 @@ def affgraph_to_edgelist(aff, nhood):
     return node1.ravel(), node2.ravel(), aff.ravel()
 
 
-def connected_components_from_affgraph(aff, nhood):
-    node1, node2, edge = affgraph_to_edgelist(aff, nhood)
-    n_vert = int(np.prod(aff.shape[1:]))
-    seg_gt, seg_sizes = connected_components(n_vert, node1, node2, edge)
-    seg_gt = seg_gt.reshape(aff.shape[1:])
-    return seg_gt, seg_sizes
-
 
 def watershed_from_affgraph(aff, seeds, nhood):
     node1, node2, edge = affgraph_to_edgelist(aff, nhood)
@@ -482,6 +475,7 @@ def watershed_from_affgraph(aff, seeds, nhood):
     seg_gt = seg_gt.reshape(aff.shape[1:])
     return seg_gt, seg_sizes
     
+
     
 if __name__=="__main__":
     import matplotlib.pyplot as plt

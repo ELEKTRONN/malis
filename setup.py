@@ -29,7 +29,10 @@ pysmall = Extension('pysmall',
 
 
 
-ext_modules = [Extension("malis._malis", ["malis/_malis.pyx", "malis/_malis_lib.cpp"])]
+ext_modules = [Extension("malis._malis",
+               sources=["malis/_malis.pyx", "malis/_malis_lib.cpp"],
+               include_dirs = ['malis/'],
+               language='c++')]
 
 setup(
     name = "malis",
